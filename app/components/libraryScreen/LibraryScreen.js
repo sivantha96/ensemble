@@ -15,7 +15,10 @@ SafeAreaView.setStatusBarHeight(0);
 export default class LibraryScreen extends React.Component {
 constructor (props) {
     super(props)
-    this.state 
+    this.state = {
+        songs: [],
+        playlists: [],
+    } 
 }
 
     static navigationOptions = ({ navigation }) => {
@@ -23,7 +26,6 @@ constructor (props) {
             title: 'Library',
             headerRight: () => (
                 <View style={{flex: 1, flexDirection: 'row', paddingRight:5}}>
-                    <StatusBar hidden={true}/>
                     <Button
                         onPress={ () => {
                             navigation.navigate('NewSong', 

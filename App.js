@@ -3,6 +3,7 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import LoginScreen from './app/components/loginScreen/LoginScreen'
 import LibraryScreen from './app/components/libraryScreen/LibraryScreen'
+import SongViewScreen from './app/components/songViewScreen/SongViewScreen'
 
 const RootStack = createStackNavigator(
   {
@@ -14,10 +15,14 @@ const RootStack = createStackNavigator(
     },
     Library: {
       screen: LibraryScreen,
+    },
+    SongView: {
+      screen: SongViewScreen
     }
+
   },
   { 
-    initialRouteName: 'Login', 
+    initialRouteName: 'SongView', 
     mode: 'modal',
   },
 )

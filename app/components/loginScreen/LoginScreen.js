@@ -63,7 +63,7 @@ export default class LoginScreen extends React.Component {
                     enablesReturnKeyAutomatically = {true}
                     keyboardAppearance= 'dark'
                 />
-                //should validate the user
+
                 <TouchableOpacity style={styles.button} onPress={() => this.logIn()}>
                     <Text style={styles.blackBody}>Log in</Text>
                 </TouchableOpacity>

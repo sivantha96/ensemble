@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
     StyleSheet,
     Text,
@@ -7,12 +7,17 @@ import {
     StatusBar,
     SectionList,
     TouchableOpacity,
-} from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+} from 'react-native'
+import { SafeAreaView } from 'react-navigation'
 
 SafeAreaView.setStatusBarHeight(0);
 
 export default class LibraryScreen extends React.Component {
+constructor (props) {
+    super(props)
+    this.state 
+}
+
     static navigationOptions = ({ navigation }) => {
         return {
             title: 'Library',

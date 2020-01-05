@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
     StyleSheet,
     Button,
@@ -10,9 +10,9 @@ import {
     TouchableWithoutFeedback,
     SectionList,
     TouchableOpacity,
-} from 'react-native';
+} from 'react-native'
 
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-navigation'
 
 SafeAreaView.setStatusBarHeight(0);
 

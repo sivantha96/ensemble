@@ -1,0 +1,15 @@
+{
+    "actionButtons": {
+        "Run":"♻️", 
+        "loadNpmCommands":false,
+        "commands": [
+        
+            {
+                "name": " ▶  Run Expo",
+                "color": "white",
+                "singleInstance": true,
+                "command": "expo start",
+            }
+        ]
+    }
+}

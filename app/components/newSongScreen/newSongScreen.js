@@ -61,9 +61,9 @@ export default class NewSongScreen extends React.Component {
             
             <TouchableWithoutFeedback  onPress={Keyboard.dismiss} accessible={false}>
                 <View style={{flex: 1, flexDirection: 'column'}}>
-                <View style={{flex: 1, flexGrow: 1, flexDirection: 'row'}}>
-                    <View style={{aspectRatio: 1,padding:10, height: '100%'}}>
-                        <View style={{aspectRatio: 1}}>
+                    <View style={{flex: 1, flexGrow: 1, flexDirection: 'row'}}>
+                        <View style={{aspectRatio: 1,padding:10, height: '100%'}}>
+                         <View style={{aspectRatio: 1}}>
                             <Image 
                                 style={{borderRadius:5, backfaceVisibility : 'hidden'}}
                                 source={require('../../assets/albumArt.jpg')}

@@ -13,13 +13,13 @@ import { SafeAreaView } from 'react-navigation'
 SafeAreaView.setStatusBarHeight(0);
 
 export default class LibraryScreen extends React.Component {
-constructor (props) {
-    super(props)
-    this.state = {
-        songs: [],
-        playlists: [],
-    } 
-}
+    constructor (props) {
+        super(props)
+        this.state = {
+            songs: [],
+            playlists: [],
+        } 
+    }
 
     static navigationOptions = ({ navigation }) => {
         return {

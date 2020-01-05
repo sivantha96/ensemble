@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 export default class LoginScreen extends React.Component {
-    //because we want to save information in the state of the class
+    //constructor to hold the information in the state
     constructor(props) {
         super(props)
         this.state = {
@@ -20,18 +20,20 @@ export default class LoginScreen extends React.Component {
         }
     }
 
+    //function to validate the user
     logIn() {
         if(this.state.username === 'admin' && this.state.password === 'admin')
             //navigate to the Library Screen using the 'navigation' prop that was passed to this instance(LoginScreen)
             return this.props.navigation.navigate('Library')
         else{
+            //display an alert for incorrect password or email
             Alert.alert('Incorrect!', 'Username of password is incorrect. Please try again.')
         }
     }
 
     render() {
         return (
-            //Fix the issue that keyboard covers the text input field
+            //KeyboardAvoidingView - Fix the issue that keyboard covers the text input field
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <Text style={styles.whiteHeading}>Log in to your Account</Text>
                 <View height={20}></View>
@@ -39,7 +41,7 @@ export default class LoginScreen extends React.Component {
                     style={styles.textInput} 
                     placeholder='Email'
                     placeholderTextColor='black' 
-                    //should save the input data in the state of the class instance
+                    /*should save the input data in the state of the class instance*/
                     onChangeText={text => this.setState({username: text})} 
                     keyboardType='email-address' 
                     returnKeyType='done'
@@ -53,7 +55,7 @@ export default class LoginScreen extends React.Component {
                     style={styles.textInput} 
                     placeholder='Password' 
                     placeholderTextColor='black' 
-                    //should save the input data in the state of the class instance
+                    /*should save the input data in the state of the class instance*/
                     onChangeText={text => this.setState({password: text})} 
                     secureTextEntry={true} returnKeyType='done'
                     blurOnSubmit={true}

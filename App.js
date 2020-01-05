@@ -10,6 +10,7 @@ import SectionEditScreen from './app/components/sectionEditScreen/SectionEditScr
 import SectionViewScreen from './app/components/sectionViewScreen/SectionViewScreen'
 import BarEditScreen from './app/components/barEditScreen/BarEditScreen'
 
+
 const RootStack = createStackNavigator(
   {
     Login: {
@@ -25,7 +26,10 @@ const RootStack = createStackNavigator(
       screen: SongViewScreen
     },
     NewSong: {
-      screen: NewSongScreen
+      screen: NewSongScreen,
+      navigationOptions: {
+        mode: 'modal'
+      }
     },
     NowPlaying: {
       screen: NowPlayingScreen
@@ -45,7 +49,7 @@ const RootStack = createStackNavigator(
 
   },
   { 
-    initialRouteName: 'NewSong', 
+    initialRouteName: 'Library', 
     mode: 'card',
   },
 )

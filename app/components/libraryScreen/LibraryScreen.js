@@ -8,133 +8,117 @@ import {
     SectionList,
     TouchableOpacity,
 } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
-
-SafeAreaView.setStatusBarHeight(0);
 
 export default class LibraryScreen extends React.Component {
+    //constructor to hold the information in the state
     constructor (props) {
         super(props)
         this.state = {
-            songs: [],
-            playlists: [],
+            songs: [
+                'Song1',
+                'Song2',
+                'Song3',
+                'Song4',
+                'Song5',
+                'Song6',
+                'Song7',
+                'Song8',
+            ],
+            playlists: [
+                'Playlist1',
+                'Playlist2',
+                'Playlist3',
+                'Playlist4',
+                'Playlist5',
+                'Playlist6',
+                'Playlist7',
+                'Playlist8',
+            ],
         } 
     }
 
+    //options for header of the screen
     static navigationOptions = ({ navigation }) => {
-        return {
+        return ({
+            headerForceInset: { top: 'never', bottom: 'never' },
             title: 'Library',
+            headerTitleContainerStyle: styles.headerTitleContainer,
+            headerTitleAlign: 'center',
+            headerTitleStyle: styles.headerTitle,
+            headerLeftContainerStyle: styles.headerLeftContainer,
+            headerRightContainerStyle: styles.headerRightContainer,
             headerRight: () => (
-                <View style={{flex: 1, flexDirection: 'row', paddingRight:5}}>
-                    <Button
-                        onPress={ () => {
-                            navigation.navigate('NewSong', 
-                            {
-                                itemId: 1,
-                                titleParam: 'New Song',
-                            });
-                        }}
-                        title="New Song"
-                        color="#FF9500"
-                    />
-                </View>
+                <Button onPress={() => navigation.navigate('NewSong')} title="New Song" color="#FF9500"/>
             ),
-        };
+        })
     }
 
+    //render a separator line between items in the list
     renderSeparator = () => {
-        return <View style={{flex:1, height:0.5, width: '100%', backgroundColor: '#707070', opacity: 50}}/>
+        return <View style={styles.separator}/>
     };
+
+    //render an item in the list
+    renderItem({item}) {
+        return (
+            <TouchableOpacity style={styles.listItem} onPress={() => this.props.navigation.navigate('SongView')}>
+                <Text style={styles.itemText}>{item}</Text> 
+            </TouchableOpacity>
+        )
+    }
+
+    //render the header of a section in the list
+    renderHeader({section}) {
+        return (
+            <View style={styles.sectionHeader}>
+                <Text style={styles.sectionHeaderText}>{section.title}</Text>
+            </View>
+        )
+    }
 
     render() {
         return (
-            <View style={styles.viewContainer}>
-                <View style={styles.container}> 
-                    <SectionList  
-                        sections={[  
-                            {
-                                title: 'Songs', 
-                                data: 
-                                [
-                                    'ALTERED',
-                                    'ABBY',
-                                    'ACTION',
-                                    'AMUCK',
-                                    'ANGUISH',
-                                    'ALTERED',
-                                    'ABBY',
-                                    'ACTION',
-                                    'AMUCK',
-                                    'ANGUISH'
-                                ]
-                            },
-                            {
-                                title: 'Playlists', 
-                                data: 
-                                [
-                                    'ALTERED',
-                                    'ABBY',
-                                    'ACTION',
-                                    'AMUCK',
-                                    'ANGUISH',
-                                    'ALTERED',
-                                    'ABBY',
-                                    'ACTION',
-                                    'AMUCK',
-                                    'ANGUISH',
-                                ]
-                            },
-                        ]}  
-                        renderItem={({item}) => 
-                        <View style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'black'}} onPress={() => alert('This is an Item!')} >
-                            <View>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('SongView')}>
-                                    <Text style={styles.itemText}>{item}</Text> 
-                                </TouchableOpacity>
-                            </View>
-                        </View>}  
-                        renderSectionHeader={({section}) => 
-                        <View style={{flex:1, backgroundColor: 'black'}}>
-                            <Text style={styles.headerText}>{section.title}</Text>
-                        </View> } 
-                        keyExtractor={(item, index) => index}
-                        ItemSeparatorComponent={this.renderSeparator}
-                    /> 
-                </View>
+            <View style={styles.Container}>
+            <StatusBar hidden={true}/>
+                <SectionList
+                    sections={[  
+                        {
+                            title: 'Songs', 
+                            data: this.state.songs,
+                        },
+                        {
+                            title: 'Playlists', 
+                            data: this.state.playlists,
+                        },
+                    ]}  
+                    renderItem={({item}) => this.renderItem({item})}  
+                    renderSectionHeader={({section}) => this.renderHeader({section})} 
+                    keyExtractor={(item, index) => index}
+                    ItemSeparatorComponent={this.renderSeparator}
+                /> 
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    viewContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        justifyContent: 'center',
-    },
     container: {
         flex: 1,
-        margin:10,
-        marginTop: 0,
-        flexGrow: 1,
         flexDirection: 'column',
-        alignItems: 'stretch',
     },
-    titleContainer: {
-        flex: 1,
-        height: 50,
-        margin: 10,
-        marginLeft: 20,
-        flexDirection: 'row',
-        alignItems: 'flex-start',
+    listItem: {
+        flex: 1, 
+        height: '100%', 
+        width: '100%', 
+        backgroundColor: 'black'
     },
-    headerText: {
+    sectionHeader: {
+        flex:1, 
+        backgroundColor: 'black'
+    },
+    sectionHeaderText: {
         fontSize: 30,
-        paddingTop: 10,  
-        paddingLeft: 10,  
-        paddingRight: 10,  
-        paddingBottom: 10,  
+        padding: 10, 
         color: '#fff',
         fontWeight: 'bold',
     },
@@ -142,6 +126,33 @@ const styles = StyleSheet.create({
         fontSize: 17,
         padding: 15,  
         color: '#fff'
+    },
+    separator: {
+        flex:1, 
+        height:0.5, 
+        width: '100%', 
+        backgroundColor: '#707070', 
+        opacity: 50
+    },
+    headerTitleContainer: {
+        alignItems: 'center'
+    },
+    headerTitle: {
+        color: '#FF9500',
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    headerLeftContainer: {
+        marginLeft: 10,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    headerRightContainer: {
+        marginRight: 10,
+        flex: 1,
+        flexDirection: 'row-reverse',
+        alignItems: 'center',
     }
 })
 

@@ -1,4 +1,9 @@
 {
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": false
+    },
     "actionButtons": {
         "Run":"♻️", 
         "loadNpmCommands":false,

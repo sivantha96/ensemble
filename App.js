@@ -4,7 +4,11 @@ import { createStackNavigator } from 'react-navigation-stack'
 import LoginScreen from './app/components/loginScreen/LoginScreen'
 import LibraryScreen from './app/components/libraryScreen/LibraryScreen'
 import SongViewScreen from './app/components/songViewScreen/SongViewScreen'
-import NewSongScreen from './app/components/newSongScreen/newSongScreen'
+import NewSongScreen from './app/components/newSongScreen/NewSongScreen'
+import NowPlayingScreen from './app/components/nowPlayingScreen/NowPlayingScreen'
+import SectionEditScreen from './app/components/sectionEditScreen/SectionEditScreen'
+import SectionViewScreen from './app/components/sectionViewScreen/SectionViewScreen'
+import BarEditScreen from './app/components/barEditScreen/BarEditScreen'
 
 const RootStack = createStackNavigator(
   {
@@ -41,8 +45,8 @@ const RootStack = createStackNavigator(
 
   },
   { 
-    initialRouteName: 'SongView', 
-    mode: 'modal',
+    initialRouteName: 'Login', 
+    mode: 'card',
   },
 )
 

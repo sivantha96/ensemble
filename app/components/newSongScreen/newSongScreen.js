@@ -66,7 +66,7 @@ export default class NewSongScreen extends React.Component {
                         <View style={{aspectRatio: 1}}>
                             <Image 
                                 style={{borderRadius:5, backfaceVisibility : 'hidden'}}
-                                source={require('../assets/albumArt.jpg')}
+                                source={require('../../assets/albumArt.jpg')}
                                 height= '100%'
                                 width= '100%'
                                 

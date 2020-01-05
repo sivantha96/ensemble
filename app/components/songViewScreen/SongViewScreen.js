@@ -1,23 +1,22 @@
 import React, { Component } from 'react'
 import { Text, StyleSheet, View } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
-
-SafeAreaView.setStatusBarHeight(0)
-
 
 export default class SongViewScreen extends Component {
     render() {
         return (
-            <View>
-                <Text style={styles.text}> textInComponent </Text>
+            <View style={styles.container}>
+                
             </View>
         )
     }
 }
 
-const styles = StyleSheet.create({
-    text: {
-        color: 'white',
-        
-    }
-})
+const styles = StyleSheet.create({container: {
+    flex: 1,
+    flexDirection: 'column',
+    },
+
+    
+}) 
+    
+

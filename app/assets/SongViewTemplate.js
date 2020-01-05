@@ -18,7 +18,7 @@ export default class NewSongScreen extends Component {
                             <View style={{flex:1, backgroundColor: 'red'}}/>
                         </View>
                         <View style={styles.buttonContainer}>
-                        <View style={{flex:1, backgroundColor: 'red'}}/>
+                            <View style={{flex:1, backgroundColor: 'red'}}/>
                         </View>
                     </View>
 

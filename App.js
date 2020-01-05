@@ -45,7 +45,7 @@ const RootStack = createStackNavigator(
 
   },
   { 
-    initialRouteName: 'NewSong', 
+    initialRouteName: 'SongView', 
     mode: 'card',
   },
 )

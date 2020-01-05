@@ -88,7 +88,7 @@ constructor (props) {
                         renderItem={({item}) => 
                         <View style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'black'}} onPress={() => alert('This is an Item!')} >
                             <View>
-                                <TouchableOpacity onPress={() => alert('This is a button!')}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('SongView')}>
                                     <Text style={styles.itemText}>{item}</Text> 
                                 </TouchableOpacity>
                             </View>

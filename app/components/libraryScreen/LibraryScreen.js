@@ -8,10 +8,7 @@ import {
     SectionList,
     TouchableOpacity,
 } from 'react-native';
-import {
-    Themed,
-    SafeAreaView,
-} from 'react-navigation';
+import { SafeAreaView } from 'react-navigation';
 
 SafeAreaView.setStatusBarHeight(0);
 
@@ -38,7 +35,7 @@ export default class LibraryScreen extends React.Component {
         };
     }
 
-    renderSeparator = ({}) => {
+    renderSeparator = () => {
         return <View style={{flex:1, height:0.5, width: '100%', backgroundColor: '#707070', opacity: 50}}/>
     };
 
@@ -91,12 +88,10 @@ export default class LibraryScreen extends React.Component {
                         </View>}  
                         renderSectionHeader={({section}) => 
                         <View style={{flex:1, backgroundColor: 'black'}}>
-                           
                             <Text style={styles.headerText}>{section.title}</Text>
                         </View> } 
                         keyExtractor={(item, index) => index}
                         ItemSeparatorComponent={this.renderSeparator}
-                        
                     /> 
                 </View>
             </View>

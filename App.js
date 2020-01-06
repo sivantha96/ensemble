@@ -49,7 +49,7 @@ const RootStack = createStackNavigator(
 
   },
   { 
-    initialRouteName: 'Library', 
+    initialRouteName: 'Login', 
     mode: 'card',
   },
 )

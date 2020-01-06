@@ -10,8 +10,6 @@ import {
     SectionList,
     TouchableOpacity,
 } from 'react-native'
-import {SafeAreaView} from 'react-navigation'
-
 
 export default class NewSongScreen extends Component {
     //constructor to hold the information in the state
@@ -23,36 +21,45 @@ export default class NewSongScreen extends Component {
             tempo: 0,
             key: "",
             albumArt: "",
-            sections: [ 
-                'Intro - Box Guitar',
-                'Intro - Rhythm Guitar',
-                'Chorus - Lead Guitar',
-                'Chorus - Keyboard',
-                'Verse - Violin',
-                'Verse - Flute',
-            ],
+            sections: [],
+           
         }
     }
 
+    
     //options for header of the screen
     static navigationOptions = ({navigation}) => {
+
         return ({
             headerForceInset: { top: 'never', bottom: 'never' },
-            title: navigation.getParam('titleParam', 'New Song'),
+            title: navigation.getParam('songTitle', 'New Song'),
             headerTitleContainerStyle: styles.headerTitleContainer,
             headerTitleAlign: 'center',
-            headerTitleStyle: styles.headerTitle,
+            headerTitleStyle: styles.headerTitle,   
             headerLeftContainerStyle: styles.headerLeftContainer,
             headerRightContainerStyle: styles.headerRightContainer,
             headerLeft: () => (
                 <Button onPress={() => this.cancelButton({navigation})} title="Cancel" color="#FF9500"/>
             ),
             headerRight: () => (
-                <Button onPress={() => this.doneButton({navigation})} title="Done" color="#FF9500"/>
+                <Button onPress={(isEmpty) => this.doneButton({navigation})} title="Done" color="#FF9500"/>
             )
         })
     }
 
+    //executed when coming back to the NewSongScreen from the SectionEditScreen and invoke render()
+    componentWillReceiveProps(nextProps){
+        this.addSection(nextProps.navigation.state.params.newSection)
+    }
+
+    //add a new section to the section list
+    addSection = (newSection) => {
+        this.setState({
+            sections: [...this.state.sections, newSection.title + " - " + newSection.instrument],
+            isEmpty: false,
+        })
+    }
+    
     //Discard all changes and go back
     static cancelButton({navigation}){
         navigation.goBack()
@@ -68,11 +75,53 @@ export default class NewSongScreen extends Component {
         return <View style={styles.separator}/>
     };
 
-    //render an item in the list
-    renderItem({item}) {
+    //Render list header item - Add new section
+    renderListHeader({item}){
         return (
-            <TouchableOpacity style={styles.listItem} onPress={() => this.props.navigation.navigate('SectionEdit')}>
-                <Text style={styles.itemText}>{item}</Text> 
+            <View>
+                <TouchableOpacity style={styles.section} onPress={() => 
+                this.props.navigation.navigate('SectionEdit', 
+                    {
+                        tempo: this.state.tempo, 
+                        key: this.state.key, 
+                        timeSignature: this.state.timeSignature
+                    }
+                )}>
+                    <View>
+                        <View style={styles.addNewButtonContainer}>
+                            <Text style={styles.addNewButton}>⊕</Text>
+                        </View>
+                    </View>
+                    <View style={styles.headerItemContainer}>
+                      <Text style={styles.itemText}>Add a new section</Text>
+                    </View>
+                </TouchableOpacity>
+                <View style={styles.separator}/>
+            </View>
+            
+        )
+    }
+
+    //render an item in the list
+    renderItem({item, index}) {
+        return (
+            <TouchableOpacity style={styles.section} onPress={() => 
+                this.props.navigation.navigate('SectionEdit', 
+                    {
+                        tempo: this.state.tempo, 
+                        key: this.state.key, 
+                        timeSignature: this.state.timeSignature
+                    }
+                )}>
+                <View>
+                    <View style={styles.addNewButtonContainer}>
+                        <Text style={styles.addNewButton}></Text>
+                    </View>
+                    
+                </View>
+                <View style={styles.listItemContainer}>
+                    <Text style={styles.itemText}>{item}</Text>
+                </View>
             </TouchableOpacity>
         )
     }
@@ -84,6 +133,12 @@ export default class NewSongScreen extends Component {
                 <Text style={styles.sectionHeaderText}>{section.title}</Text>
             </View>
         )
+    }
+
+    //change the name of the song
+    changeName(text) {
+        let isEmpty = false
+        this.setState({title: text})
     }
 
 
@@ -103,7 +158,7 @@ export default class NewSongScreen extends Component {
                             returnKeyType= 'done'
                             placeholder= 'Untitled Song'
                             placeholderTextColor= '#fff'
-                            onChangeText = {(text) => this.setState({ title: text})}
+                            onChangeText = {(text) => this.setState({ tempo: text})}
                             />
                         </View>
                         <View style={styles.buttonContainer}>
@@ -147,7 +202,6 @@ export default class NewSongScreen extends Component {
                     </View> 
                 </View>
                 <View style={styles.bottomContainer}>
-                     
                     <SectionList
                         sections={[
                             {
@@ -156,8 +210,9 @@ export default class NewSongScreen extends Component {
                             }
                         ]}
                         ItemSeparatorComponent={this.renderSeparator}
-                        renderItem={({item}) => this.renderItem({item})}  
+                        renderItem={({item,index}) => this.renderItem({item,index})}  
                         keyExtractor={(item, index) => index}
+                        ListHeaderComponent={(item) => this.renderListHeader({item})}
                     />
                 </View>
             </View>
@@ -256,11 +311,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#707070', 
         opacity: 50
     },
-    listItem: {
+    listItemContainer: {
         flex: 1, 
+        flexDirection: 'row',
+        alignItems: 'center',
         height: '100%', 
         width: '100%', 
-        backgroundColor: 'black'
     },
     sectionHeader: {
         flex:1, 
@@ -274,11 +330,31 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: 17,
-        padding: 15,  
         color: '#fff'
-    },  
-
-
-    
-
+    },
+    section: {
+        flex: 1,
+        flexDirection: "row",
+        alignContent: 'stretch',
+    },
+    addNewButtonContainer: {
+        alignItems: 'center',
+        justifyContent:'center',
+        flex: 1,
+        width:50,
+        aspectRatio: 1,
+        flexDirection: 'row',
+    },
+    addNewButton: {
+        color: 'white',
+        padding: 5,
+        fontSize: 25
+    },
+    headerItemContainer: {
+        flex: 1, 
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: '100%', 
+        width: '100%', 
+    }
 })

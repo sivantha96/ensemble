@@ -97,11 +97,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: "center",
         alignItems:'center',
+        height: 50,
         width: DEVICE_WIDTH - (DEVICE_WIDTH/3),
-        marginHorizontal: 20,
         borderRadius: 5,
         backgroundColor: '#dedad9',
-        margin: 5
+        margin:5
     },
     button: {
         textAlign: 'center',

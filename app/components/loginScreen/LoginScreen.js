@@ -9,6 +9,7 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
 } from 'react-native'
+import SongService from '../../services/songService'
 
 export default class LoginScreen extends React.Component {
     //because we want to save information in the state of the class
@@ -18,6 +19,21 @@ export default class LoginScreen extends React.Component {
             username:"",
             password:"",
         }
+    }
+
+    componentDidMount() {
+        try {
+            const response = SongService.getSongs()
+            console.log('test componentDidMount', response.then(
+                (value) => {console.log(value);
+                }
+            ))
+            
+        } catch (error) {
+            console.log('error', error);
+            
+        }
+      
     }
 
     logIn() {
@@ -34,7 +50,8 @@ export default class LoginScreen extends React.Component {
             //Fix the issue that keyboard covers the text input field
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <Text style={styles.whiteHeading}>Log in to your Account</Text>
-                <View height={20}></View>
+                <View height={20}><Text>test</Text></View>
+               
                 <TextInput 
                     style={styles.textInput} 
                     placeholder='Email'
@@ -63,7 +80,7 @@ export default class LoginScreen extends React.Component {
                     enablesReturnKeyAutomatically = {true}
                     keyboardAppearance= 'dark'
                 />
-                //should validate the user
+               {/* should validate the user */}
                 <TouchableOpacity style={styles.button} onPress={() => this.logIn()}>
                     <Text style={styles.blackBody}>Log in</Text>
                 </TouchableOpacity>

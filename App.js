@@ -4,6 +4,10 @@ import { createStackNavigator } from 'react-navigation-stack'
 import LoginScreen from './app/components/loginScreen/LoginScreen'
 import LibraryScreen from './app/components/libraryScreen/LibraryScreen'
 
+if(__DEV__) {
+  import("./app/ReactotronConfig")
+}
+
 const RootStack = createStackNavigator(
   {
     Login: {

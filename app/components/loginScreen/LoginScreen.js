@@ -9,6 +9,7 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
 } from 'react-native'
+import styles from './Styles'
 
 export default class LoginScreen extends React.Component {
     //constructor to hold the information in the state
@@ -35,7 +36,7 @@ export default class LoginScreen extends React.Component {
         return (
             //KeyboardAvoidingView - Fix the issue that keyboard covers the text input field
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-                <Text style={styles.whiteHeading}>Log in to your Account</Text>
+                <Text style={styles.whiteSubject}>Log in to your Account</Text>
                 <View height={20}></View>
                 <TextInput 
                     style={styles.textInput} 
@@ -76,49 +77,3 @@ export default class LoginScreen extends React.Component {
         )
     }
 }
-
-const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
-
-const styles = StyleSheet.create({
-    whiteHeading: {
-        fontSize: 30,
-        color: '#fff',
-    },
-    whiteBody:{
-        color: '#fff',
-        fontSize: 20,
-    },
-    blackBody:{
-        color: 'black',
-        fontSize: 20,
-    },
-    textInput: {
-        textAlign: 'center',
-        justifyContent: "center",
-        alignItems:'center',
-        height: 50,
-        width: DEVICE_WIDTH - (DEVICE_WIDTH/3),
-        borderRadius: 5,
-        backgroundColor: '#dedad9',
-        margin:5
-    },
-    button: {
-        textAlign: 'center',
-        justifyContent: "center",
-        alignItems:'center',
-        fontSize: 15,
-        width: DEVICE_WIDTH - (3*DEVICE_WIDTH/5),
-        height: 40,
-        marginHorizontal: 20,
-        borderRadius: 5,
-        backgroundColor: '#dedad9',
-        margin: 5
-    },
-    container: {
-        flex: 1,
-        flexGrow: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-})

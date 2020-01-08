@@ -8,6 +8,7 @@ import {
     SectionList,
     TouchableOpacity,
 } from 'react-native'
+import styles from './Styles'
 
 export default class LibraryScreen extends React.Component {
     //constructor to hold the information in the state
@@ -42,11 +43,11 @@ export default class LibraryScreen extends React.Component {
         return ({
             headerForceInset: { top: 'never', bottom: 'never' },
             title: 'Library',
-            headerTitleContainerStyle: styles.headerTitleContainer,
+            headerTitleContainerStyle: styles.appHeaderTitleContainer,
             headerTitleAlign: 'center',
-            headerTitleStyle: styles.headerTitle,
-            headerLeftContainerStyle: styles.headerLeftContainer,
-            headerRightContainerStyle: styles.headerRightContainer,
+            headerTitleStyle: styles.appHeaderTitle,
+            headerLeftContainerStyle: styles.appHeaderLeftContainer,
+            headerRightContainerStyle: styles.appHeaderRightContainer,
             headerRight: () => (
                 <Button onPress={() => navigation.navigate('NewSong')} title="New Song" color="#FF9500"/>
             ),
@@ -61,8 +62,8 @@ export default class LibraryScreen extends React.Component {
     //render an item in the list
     renderItem({item}) {
         return (
-            <TouchableOpacity style={styles.listItem} onPress={() => this.props.navigation.navigate('SongView')}>
-                <Text style={styles.itemText}>{item}</Text> 
+            <TouchableOpacity style={styles.listItemContainer} onPress={() => this.props.navigation.navigate('SongView')}>
+                <Text style={styles.listItemText}>{item}</Text> 
             </TouchableOpacity>
         )
     }
@@ -70,15 +71,15 @@ export default class LibraryScreen extends React.Component {
     //render the header of a section in the list
     renderHeader({section}) {
         return (
-            <View style={styles.sectionHeader}>
-                <Text style={styles.sectionHeaderText}>{section.title}</Text>
+            <View style={styles.listSectionHeaderContainer}>
+                <Text style={styles.listSectionHeaderText}>{section.title}</Text>
             </View>
         )
     }
 
     render() {
         return (
-            <View style={styles.Container}>
+            <View style={styles.appContainer}>
             <StatusBar hidden={true}/>
                 <SectionList
                     sections={[  
@@ -100,59 +101,3 @@ export default class LibraryScreen extends React.Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-    },
-    listItem: {
-        flex: 1, 
-        height: '100%', 
-        width: '100%', 
-        backgroundColor: 'black'
-    },
-    sectionHeader: {
-        flex:1, 
-        backgroundColor: 'black'
-    },
-    sectionHeaderText: {
-        fontSize: 30,
-        padding: 10, 
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-    itemText: {
-        fontSize: 17,
-        padding: 15,  
-        color: '#fff'
-    },
-    separator: {
-        flex:1, 
-        height:0.5, 
-        width: '100%', 
-        backgroundColor: '#707070', 
-        opacity: 50
-    },
-    headerTitleContainer: {
-        alignItems: 'center'
-    },
-    headerTitle: {
-        color: '#FF9500',
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-    headerLeftContainer: {
-        marginLeft: 10,
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    headerRightContainer: {
-        marginRight: 10,
-        flex: 1,
-        flexDirection: 'row-reverse',
-        alignItems: 'center',
-    }
-})
-

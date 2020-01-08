@@ -10,7 +10,6 @@ import SectionEditScreen from './app/components/sectionEditScreen/SectionEditScr
 import SectionViewScreen from './app/components/sectionViewScreen/SectionViewScreen'
 import BarEditScreen from './app/components/barEditScreen/BarEditScreen'
 
-
 const RootStack = createStackNavigator(
   {
     Login: {
@@ -46,10 +45,9 @@ const RootStack = createStackNavigator(
     BarEdit: {
       screen: BarEditScreen
     }
-
   },
   { 
-    initialRouteName: 'Login', 
+    initialRouteName: 'Library', 
     mode: 'card',
   },
 )

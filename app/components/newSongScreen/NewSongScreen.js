@@ -10,6 +10,7 @@ import {
     SectionList,
     TouchableOpacity,
 } from 'react-native'
+import styles from './Styles'
 
 export default class NewSongScreen extends Component {
     //constructor to hold the information in the state
@@ -22,22 +23,19 @@ export default class NewSongScreen extends Component {
             key: "",
             albumArt: "",
             sections: [],
-           
         }
     }
-
-    
     //options for header of the screen
     static navigationOptions = ({navigation}) => {
 
         return ({
             headerForceInset: { top: 'never', bottom: 'never' },
             title: navigation.getParam('songTitle', 'New Song'),
-            headerTitleContainerStyle: styles.headerTitleContainer,
+            headerTitleContainerStyle: styles.appHeaderTitleContainer,
             headerTitleAlign: 'center',
-            headerTitleStyle: styles.headerTitle,   
-            headerLeftContainerStyle: styles.headerLeftContainer,
-            headerRightContainerStyle: styles.headerRightContainer,
+            headerTitleStyle: styles.appHeaderTitle,   
+            headerLeftContainerStyle: styles.appHeaderLeftContainer,
+            headerRightContainerStyle: styles.appHeaderRightContainer,
             headerLeft: () => (
                 <Button onPress={() => this.cancelButton({navigation})} title="Cancel" color="#FF9500"/>
             ),
@@ -79,7 +77,7 @@ export default class NewSongScreen extends Component {
     renderListHeader({item}){
         return (
             <View>
-                <TouchableOpacity style={styles.section} onPress={() => 
+                <TouchableOpacity style={styles.listSectionContainer} onPress={() => 
                 this.props.navigation.navigate('SectionEdit', 
                     {
                         tempo: this.state.tempo, 
@@ -92,8 +90,8 @@ export default class NewSongScreen extends Component {
                             <Text style={styles.addNewButton}>⊕</Text>
                         </View>
                     </View>
-                    <View style={styles.headerItemContainer}>
-                      <Text style={styles.itemText}>Add a new section</Text>
+                    <View style={styles.listItemContainer}>
+                      <Text style={styles.listItemText}>Add a new section</Text>
                     </View>
                 </TouchableOpacity>
                 <View style={styles.separator}/>
@@ -105,7 +103,7 @@ export default class NewSongScreen extends Component {
     //render an item in the list
     renderItem({item, index}) {
         return (
-            <TouchableOpacity style={styles.section} onPress={() => 
+            <TouchableOpacity style={styles.listSectionContainer} onPress={() => 
                 this.props.navigation.navigate('SectionEdit', 
                     {
                         tempo: this.state.tempo, 
@@ -120,7 +118,7 @@ export default class NewSongScreen extends Component {
                     
                 </View>
                 <View style={styles.listItemContainer}>
-                    <Text style={styles.itemText}>{item}</Text>
+                    <Text style={styles.listItemText}>{item}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -129,26 +127,19 @@ export default class NewSongScreen extends Component {
     //render the header of a section in the list
     renderHeader({section}) {
         return (
-            <View style={styles.sectionHeader}>
-                <Text style={styles.sectionHeaderText}>{section.title}</Text>
+            <View style={styles.listSectionHeaderContainer}>
+                <Text style={styles.listSectionHeaderText}>{section.title}</Text>
             </View>
         )
     }
 
-    //change the name of the song
-    changeName(text) {
-        let isEmpty = false
-        this.setState({title: text})
-    }
-
-
     render() {
         return (
-            <View style={styles.container}>
+            <View style={styles.appContainer}>
                 <StatusBar hidden={true}/>
                 <View style={styles.topContainer}>
                     <View style={styles.albumArtContainer}>
-                        <Image style={styles.image} source={require('../../assets/albumArt.jpg')} height={'100%'}/>
+                        <Image style={styles.albumArt} source={require('../../assets/albumArt.jpg')} height={'100%'}/>
                     </View>
                     <View style={styles.infoContainer}>
                         <View style={styles.titleContainer}>
@@ -158,11 +149,11 @@ export default class NewSongScreen extends Component {
                             returnKeyType= 'done'
                             placeholder= 'Untitled Song'
                             placeholderTextColor= '#fff'
-                            onChangeText = {(text) => this.setState({ tempo: text})}
+                            onChangeText = {(text) => this.setState({ title: text})}
                             />
                         </View>
-                        <View style={styles.buttonContainer}>
-                            <View style={styles.buttons}>
+                        <View style={styles.manyButtonContainer}>
+                            <View style={styles.singleButtonContainer}>
                                 <TextInput style={styles.buttonInput}
                                 enablesReturnKeyAutomatically = {true}
                                 keyboardAppearance= 'dark'
@@ -172,7 +163,7 @@ export default class NewSongScreen extends Component {
                                 onChangeText = {(text) => this.setState({ tempo: text})}
                                 />
                             </View>
-                            <View style={styles.buttons}>
+                            <View style={styles.singleButtonContainer}>
                                 <TextInput style={styles.buttonInput}
                                 enablesReturnKeyAutomatically = {true}
                                 keyboardAppearance= 'dark'
@@ -182,7 +173,7 @@ export default class NewSongScreen extends Component {
                                 onChangeText = {(text) => this.setState({ timeSignature: text})}
                                 />
                             </View>
-                            <View style={styles.buttons}>
+                            <View style={styles.singleButtonContainer}>
                                 <TextInput style={styles.buttonInput}
                                 enablesReturnKeyAutomatically = {true}
                                 keyboardAppearance= 'dark'
@@ -192,10 +183,10 @@ export default class NewSongScreen extends Component {
                                 onChangeText = {(text) => this.setState({ key: text})}
                                 />
                             </View>
-                            <View style={styles.buttons}>
+                            <View style={styles.singleButtonContainer}>
 
                             </View>
-                            <View style={styles.buttons}>
+                            <View style={styles.singleButtonContainer}>
 
                             </View>
                         </View>
@@ -219,142 +210,3 @@ export default class NewSongScreen extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex:1,
-        flexDirection: 'column',
-    },
-    topContainer: {
-        flex:4,
-        flexDirection: 'row',
-        borderBottomColor: '#707070',
-        borderBottomWidth: 0.5,
-    },
-    bottomContainer: {
-        flex:5,
-        flexDirection: 'column',
-    },
-    //container of the album art of the song
-    albumArtContainer: {
-        padding: 10,
-        aspectRatio: 1,
-        height: '100%',
-    },
-    //container of titleContainer and buttonsContainer
-    infoContainer: {
-        flex:1,
-        flexDirection: 'column',
-    },
-    //container of the title of the song
-    titleContainer: {
-        flex:1,
-        flexDirection: 'row',
-        padding: 10,
-    },
-    //container time-signature, key, tempo of the song
-    buttonContainer: {
-        flex:1,
-        flexDirection: 'row-reverse',
-        padding: 10,
-    },
-    //image style
-    image: {
-        aspectRatio: 1,
-        borderRadius: 10,
-    },
-    headerTitleContainer: {
-        alignItems: 'center'
-    },
-    headerTitle: {
-        color: '#FF9500',
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-    headerLeftContainer: {
-        marginLeft: 10,
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    headerRightContainer: {
-        marginRight: 10,
-        flex: 1,
-        flexDirection: 'row-reverse',
-        alignItems: 'center',
-    },
-    titleInput: {
-        fontSize: 25,
-        color: '#fff',
-    },
-    buttons: {
-        marginLeft: 10,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignContent: 'center',
-    },
-    buttonInput: {
-        width: '100%',
-        aspectRatio: 2,
-        padding:5,
-        textAlign: 'center',
-        borderColor: '#FF9500', 
-        borderWidth: 1, 
-        color: '#FF9500',
-        borderRadius: 5
-    },
-    separator: {
-        flex:1, 
-        height:0.5, 
-        width: '100%', 
-        backgroundColor: '#707070', 
-        opacity: 50
-    },
-    listItemContainer: {
-        flex: 1, 
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: '100%', 
-        width: '100%', 
-    },
-    sectionHeader: {
-        flex:1, 
-        backgroundColor: 'black'
-    },
-    sectionHeaderText: {
-        fontSize: 30,
-        padding: 10, 
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-    itemText: {
-        fontSize: 17,
-        color: '#fff'
-    },
-    section: {
-        flex: 1,
-        flexDirection: "row",
-        alignContent: 'stretch',
-    },
-    addNewButtonContainer: {
-        alignItems: 'center',
-        justifyContent:'center',
-        flex: 1,
-        width:50,
-        aspectRatio: 1,
-        flexDirection: 'row',
-    },
-    addNewButton: {
-        color: 'white',
-        padding: 5,
-        fontSize: 25
-    },
-    headerItemContainer: {
-        flex: 1, 
-        flexDirection: 'row',
-        alignItems: 'center',
-        height: '100%', 
-        width: '100%', 
-    }
-})

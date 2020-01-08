@@ -21,19 +21,18 @@ export default class LoginScreen extends React.Component {
         }
     }
 
-    componentDidMount() {
+    getData = async ()  => {
         try {
-            const response = SongService.getSongs()
-            console.log('test componentDidMount', response.then(
-                (value) => {console.log(value);
-                }
-            ))
+            const response = await SongService.getSongs()
+            console.log('test componentDidMount', response.data)
             
         } catch (error) {
             console.log('error', error);
-            
         }
-      
+    }
+
+    componentDidMount() {
+        this.getData()
     }
 
     logIn() {

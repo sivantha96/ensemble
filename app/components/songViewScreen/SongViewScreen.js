@@ -35,22 +35,22 @@ export default class SongViewScreen extends Component {
             headerLeftContainerStyle: styles.appHeaderLeftContainer,
             headerRightContainerStyle: styles.appHeaderRightContainer,
             headerLeft: () => (
-                <Button onPress={() => this.cancelButton({navigation})} title="Home" color="#FF9500"/>
+                <Button onPress={() => this.homeButton({navigation})} title="Home" color="#FF9500"/>
             ),
             headerRight: () => (
-                <Button onPress={(isEmpty) => this.doneButton({navigation})} title="Edit" color="#FF9500"/>
+                <Button onPress={(isEmpty) => this.editButton({navigation})} title="Edit" color="#FF9500"/>
             )
         })
     }
 
-    //Discard all changes and go back
-    static cancelButton({navigation}){
-        navigation.goBack()
+    //Go back to home 
+    static homeButton({navigation}){
+        navigation.navigate('Library')
     }
 
-    //Save all changes and go to Song View Screen
-    static doneButton({navigation}){
-        navigation.navigate('SongView')
+    //Go to New Song screen
+    static editButton({navigation}){
+        navigation.navigate('NewSong')
     }
 
     //render a separator line between items in the list
@@ -61,7 +61,7 @@ export default class SongViewScreen extends Component {
     renderItem({item, index}) {
         return (
             <TouchableOpacity style={styles.listSectionContainer} onPress={() => 
-                this.props.navigation.navigate('SectionEdit', 
+                this.props.navigation.navigate('SectionView', 
                     {
                         tempo: this.state.tempo, 
                         key: this.state.key, 
@@ -75,6 +75,9 @@ export default class SongViewScreen extends Component {
             </TouchableOpacity>
         )
     }
+
+    //Go to Section Edit from a section
+
 
     render() {
         return (

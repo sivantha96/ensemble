@@ -114,6 +114,7 @@ export default StyleSheet.create({
     },
     //Input of a title of a song/section
     titleInput: {
+        marginLeft:5,
         fontSize: 25,
         color: '#fff',
     },
@@ -125,7 +126,7 @@ export default StyleSheet.create({
     },
     //Container of a SINGLE button in the button container
     singleButtonContainer: {
-        marginLeft: 10,
+        marginHorizontal:3, 
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -156,7 +157,26 @@ export default StyleSheet.create({
         borderBottomWidth: 0.5,
     },
     bottomContainer: {
+        margin: 3,
         flex:5,
         flexDirection: 'column',
     },
+    sectionBarContainer: {
+        flexDirection: 'row',
+        flex: 1,
+        padding: 2,
+        height: 50,
+        marginVertical: 8,
+        borderLeftWidth: 0.5,
+        borderRightWidth: 0.5,
+        borderColor: '#707070',
+    },
+    noteContainer: {
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    noteText: {
+        color: 'white'
+    }
 })

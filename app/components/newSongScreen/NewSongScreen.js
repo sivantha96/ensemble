@@ -27,7 +27,6 @@ export default class NewSongScreen extends Component {
     }
     //options for header of the screen
     static navigationOptions = ({navigation}) => {
-
         return ({
             headerForceInset: { top: 'never', bottom: 'never' },
             title: navigation.getParam('songTitle', 'New Song'),
@@ -201,8 +200,9 @@ export default class NewSongScreen extends Component {
                             }
                         ]}
                         ItemSeparatorComponent={this.renderSeparator}
-                        renderItem={({item,index}) => this.renderItem({item,index})}  
+                          
                         keyExtractor={(item, index) => index}
+                        renderItem={({item,index}) => this.renderItem({item,index})}
                         ListHeaderComponent={(item) => this.renderListHeader({item})}
                     />
                 </View>

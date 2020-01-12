@@ -4,47 +4,28 @@ import {
     View,
     Button,
     TextInput,
-    SectionList,
     TouchableOpacity,
+    ScrollView,
 } from 'react-native'
 import styles from './Styles'
-import { ScrollView } from 'react-native-gesture-handler'
 
 export default class SectionEditScreen extends Component {
     //constructor to hold the information in the state
     constructor(props) {
         super(props)
         this.state = {
+            section_id: null,
             title: "",
             timeSignature: props.navigation.getParam('timeSignature', ''),
             tempo: props.navigation.getParam('tempo', 0),
-            bars: 0,
+            noOfBars: 0,
             notationType: "",
             instrument: "",
             barsPerLine: "",
-            notations: [ 
-                {
-                    note1: 'C',
-                    note2: 'D',
-                    note3: 'E',
-                    note4: 'F'
-                },
-                {
-                    note1: 'G',
-                    note2: 'H',
-                    note3: 'I',
-                    note4: 'J'
-                },
-                {
-                    note1: 'G',
-                    note2: 'H',
-                    note3: 'I',
-                    note4: 'J'
-                }
+            bars: [
             ],
         }
     }
-
 
     //options for header of the screen
     static navigationOptions = ({navigation}) => {
@@ -65,6 +46,26 @@ export default class SectionEditScreen extends Component {
         })
     }
 
+    // //Get all bars related to this section
+    // getBarData = async () => {
+    //     try {
+    //         const response = await BarService.getAllBars(sectionId)
+    //         this.setState({
+    //             bars: [... response.data]
+    //         })
+            
+    //     } catch (error) {
+    //         console.log('error' , error)
+            
+    //     }
+    // }
+
+    //Executed after mounting
+    componentDidMount() {
+        this.props.navigation.setParams({doneButton: this.doneButton, cancelButton: this.cancelButton})
+        //this.getBarData()
+    }
+
     //Discard all changes and go back
     static cancelButton({navigation}){
         navigation.goBack()
@@ -78,22 +79,38 @@ export default class SectionEditScreen extends Component {
     //Return a view of a single bar
     renderBar(bar) {
         return (
-            <View style={styles.barContainer}>
+            <TouchableOpacity key={bar.id} style={styles.barContainer} onPress={() => this.props.navigation.navigate('BarEdit', {bar_id:bar.id, section_id:this.state.section_id})}>
                 <View style={styles.noteContainer}>
-                    <Text style={styles.noteText}>{bar.note1}</Text>
+                    <Text  style={styles.noteText}>{bar.note_1}</Text>
                 </View>
                 <View style={styles.noteContainer}>
-                    <Text style={styles.noteText}>{bar.note2}</Text>
+                    <Text style={styles.noteText}>{bar.note_2}</Text>
                 </View>
                 <View style={styles.noteContainer}>
-                    <Text style={styles.noteText}>{bar.note3}</Text>
+                    <Text style={styles.noteText}>{bar.note_3}</Text>
                 </View>
                 <View style={styles.noteContainer}>
-                    <Text style={styles.noteText}>{bar.note4}</Text>
+                    <Text style={styles.noteText}>{bar.note_4}</Text>
                 </View>
-                
-            </View>
+            </TouchableOpacity>
         )
+    }
+
+    //Set the number of Bars
+    //Create empty bars under the id of this section
+    setBars(text) {
+        const newBars = []
+        for (let i = 0; i < text; i++) {
+            newBars.push({
+                id: i,
+                section_id: this.state.section_id,
+                note_1: '-',
+                note_2: '-',
+                note_3: '-',
+                note_4: '-',})
+        }
+        this.setState({noOfBars: text, bars: [... newBars]})
+        console.log(this.state.bars)
     }
 
     render() {
@@ -102,14 +119,14 @@ export default class SectionEditScreen extends Component {
                 <View style={styles.topContainer}>
                     <View style={styles.infoContainer}>
                         <View style={styles.titleContainer}>
-                        <TextInput style={styles.titleInput}
-                            enablesReturnKeyAutomatically = {true}
-                            keyboardAppearance= 'dark'
-                            returnKeyType= 'done'
-                            placeholder= 'Untitled Section'
-                            placeholderTextColor= '#fff'
-                            onChangeText = {(text) => this.setState({section: {title:text}})}
-                            />
+                            <TextInput style={styles.titleInput}
+                                enablesReturnKeyAutomatically = {true}
+                                keyboardAppearance= 'dark'
+                                returnKeyType= 'done'
+                                placeholder= 'Untitled Section'
+                                placeholderTextColor= '#fff'
+                                onChangeText = {(text) => this.setState({title:text})}
+                                />
                         </View>
                         <View style={styles.manyButtonContainer}>
                             <View style={styles.singleButtonContainer}>
@@ -119,7 +136,7 @@ export default class SectionEditScreen extends Component {
                                     returnKeyType= 'done'
                                     placeholder= 'Bars per line'
                                     placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({section: {barsPerLine:text}})}
+                                    onChangeText = {(text) => this.setState({barsPerLine:text})}
                                 />
                             </View>
                             <View style={styles.singleButtonContainer}>
@@ -129,7 +146,7 @@ export default class SectionEditScreen extends Component {
                                     returnKeyType= 'done'
                                     placeholder= 'Instrument'
                                     placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState(section.instrument=text)}
+                                    onChangeText = {(text) => this.setState({instrument:text})}
                                 />
                             </View>
                             <View style={styles.singleButtonContainer}>
@@ -139,7 +156,7 @@ export default class SectionEditScreen extends Component {
                                     returnKeyType= 'done'
                                     placeholder= 'Notation Type'
                                     placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({section: {notationType:text}})}
+                                    onChangeText = {(text) => this.setState({notationType:text})}
                                 />
                             </View>
                             <View style={styles.singleButtonContainer}>
@@ -149,7 +166,7 @@ export default class SectionEditScreen extends Component {
                                     returnKeyType= 'done'
                                     placeholder= 'No. of Bars'
                                     placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({section: {bars: text}})}
+                                    onChangeText = {(text) => this.setBars(text)}
                                 />
                             </View>
                             <View style={styles.singleButtonContainer}>
@@ -159,7 +176,7 @@ export default class SectionEditScreen extends Component {
                                     returnKeyType= 'done'
                                     placeholder= 'Tempo'
                                     placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({section: {tempo:text}})}
+                                    onChangeText = {(text) => this.setState({tempo:text})}
                                 />
                             </View>
                             <View style={styles.singleButtonContainer}>
@@ -169,23 +186,18 @@ export default class SectionEditScreen extends Component {
                                     returnKeyType= 'done'
                                     placeholder= 'Time Signature'
                                     placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({section: {timeSignature:text}})}
+                                    onChangeText = {(text) => this.setState({timeSignature:text})}
                                 />
                             </View>
                         </View>
                     </View>
                 </View>
-
                 <View style={styles.bottomContainer}>
                     <ScrollView>
                         <View style={styles.wrappingContainer}>
-                            {
-                                this.state.notations.map(bar => this.renderBar(bar))
-                            
-                            }
+                            {this.state.bars.map(bar => this.renderBar(bar))}
                         </View>
                     </ScrollView>
-                        
                 </View>
             </View>
         )

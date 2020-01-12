@@ -147,46 +147,33 @@ export default StyleSheet.create({
     
     appContainer: {
         flex:1,
-        flexDirection: 'column',
     },
-    topContainer: {
-        flex:4,
-        flexDirection: 'row',
-        borderBottomColor: '#707070',
-        borderBottomWidth: 0.5,
-    },
-    bottomContainer: {
-        flex:5,
-        flexDirection: 'column',
-    },
-    addNewButtonContainer: {
-        alignItems: 'center',
-        justifyContent:'center',
-        flex: 1,
-        width:50,
-        aspectRatio: 1,
+    freeSpace: {
+        flex: 2,
         flexDirection: 'row',
     },
-    addNewButton: {
-        color: 'white',
-        padding: 5,
-        fontSize: 25
-    },
-
     barEditContainer: {
+        margin: 20,
         flex: 4,
         flexDirection: 'row',
-        alignItems: "center",
-        justifyContent: 'space-around',
-        alignContent: 'center',
-        backgroundColor: '#fdd',
-
     },
-
-    barEditText: {
-        color: '#fff',
-        fontSize: 70,
-
+    noteContainer: {
+        flex: 1,
+        padding: 5,
+        aspectRatio: 1
+    },
+    noteInput:{
+        flex: 1,
+        margin: 10,
+        borderColor: '#FF9500',
+        borderWidth: 0.5,
+        borderRadius: 5,
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 50
     },
     
 })

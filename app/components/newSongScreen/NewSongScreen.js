@@ -62,20 +62,6 @@ export default class NewSongScreen extends Component {
             )
         })
     }
-
-    //executed when coming back to the NewSongScreen from the SectionEditScreen and invoke render()
-    componentWillReceiveProps(nextProps){
-        console.log(nextProps.navigation.state.params)
-        this.addSection(nextProps.navigation.state.params)
-
-    }
-
-    //add a new section to the section list
-    addSection = (props) => {
-        this.setState({
-            sections: [...this.state.sections, props.title + " - " + props.instrument],
-        })
-    }
     
     //Discard all changes and go back
     //Should clear any changes made in the database

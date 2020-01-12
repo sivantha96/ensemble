@@ -178,10 +178,10 @@ export default StyleSheet.create({
         color: 'white'
     },
     barContainer: {
-        flexDirection: 'row',
-        flex: 1,
+        
+        width: ((DEVICE_WIDTH - 10) /4),
         height: 50,
-        maxWidth: ((DEVICE_WIDTH - 10) /4),
+        flexDirection: 'row',
         marginVertical: 8,
         borderLeftWidth: 0.5,
         borderRightWidth: 0.5,

@@ -75,22 +75,22 @@ export default class NewSongScreen extends Component {
     // this.setState({id})
 
     // Function to execute after pressing a button to save
-    // newSongData = async ()  => {
-    //     this.getSongData
-    //     try {
-    //         const response = await SongService.addSong({
-    //             id: this.state.id + 1,
-    //             name: this.state.title,
-    //             duration: 45,
-    //             tempo: 120,
-    //             song_key: 'G'
-    //         })
-    //         console.log('test componentDidMount', response.data)
+    newSongData = async ()  => {
+        // this.getSongData
+        
+        try {
+            const response = await SongService.addSong({
+                name: this.state.title,
+                duration: 45,
+                tempo: 120,
+                // song_key: 'G'
+            })
+            console.log('test componentDidMount', response.data)
             
-    //     } catch (error) {
-    //         console.log('error', error);
-    //     }
-    // }
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
 
     //Save all changes and go to Song View Screen
     static doneButton({navigation}){
@@ -106,14 +106,16 @@ export default class NewSongScreen extends Component {
     renderListHeader({item}){
         return (
             <View>
-                <TouchableOpacity style={styles.listSectionContainer} onPress={() => 
-                this.props.navigation.navigate('SectionEdit', 
-                    {
-                        tempo: this.state.tempo, 
-                        key: this.state.key, 
-                        timeSignature: this.state.timeSignature
-                    }
-                )}>
+                <TouchableOpacity style={styles.listSectionContainer} onPress={() => {return(
+                    this.newSongData()
+                //      this.props.navigation.navigate('SectionEdit', 
+                //      {
+                //          tempo: this.state.tempo, 
+                //          key: this.state.key, 
+                //          timeSignature: this.state.timeSignature
+                //      }
+                //  )
+                )}}>
                     <View>
                         <View style={styles.addNewButtonContainer}>
                             <Text style={styles.addNewButton}>⊕</Text>

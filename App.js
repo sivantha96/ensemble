@@ -10,6 +10,10 @@ import SectionEditScreen from './app/components/sectionEditScreen/SectionEditScr
 import SectionViewScreen from './app/components/sectionViewScreen/SectionViewScreen'
 import BarEditScreen from './app/components/barEditScreen/BarEditScreen'
 
+if(__DEV__) {
+  import("./app/ReactotronConfig")
+}
+
 const RootStack = createStackNavigator(
   {
     Login: {

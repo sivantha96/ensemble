@@ -8,7 +8,10 @@ import {
     SectionList,
     TouchableOpacity,
 } from 'react-native'
-import styles from './Styles'
+import { SafeAreaView } from 'react-navigation'
+import SongService from '../../services/songService'
+
+SafeAreaView.setStatusBarHeight(0);
 
 export default class LibraryScreen extends React.Component {
     //constructor to hold the information in the state
@@ -20,7 +23,25 @@ export default class LibraryScreen extends React.Component {
         } 
     }
 
-    //options for header of the screen
+    
+
+    componentDidMount(){ 
+        this.getSongData()
+    }
+
+    getSongData = async ()  => {
+        try {
+            const response = await SongService.getAllSongs()
+            this.setState({
+                songs: [... response.data]
+            })
+            console.log('test componentDidMount', response.data)
+            
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+
     static navigationOptions = ({ navigation }) => {
         return ({
             headerForceInset: { top: 'never', bottom: 'never' },

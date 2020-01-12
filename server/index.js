@@ -17,11 +17,11 @@ const mysqlConnection = mysql.createConnection(db)
 
 mysqlConnection.connect((err) => {
     if(!err){
-        console.log('DB connection suceeded');
+        console.log('DB connection succeeded');
         require('./app/routes')(app, mysqlConnection)
         
     } else {
-        console.log('DB connection faild\nError :'+JSON.stringify(err, undefined , 2));
+        console.log('DB connection failed\nError :'+JSON.stringify(err, undefined , 2));
         
     }
 });

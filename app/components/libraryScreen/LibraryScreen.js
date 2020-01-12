@@ -8,6 +8,7 @@ import {
     SectionList,
     TouchableOpacity,
 } from 'react-native'
+import styles from './Styles'
 import { SafeAreaView } from 'react-navigation'
 import SongService from '../../services/songService'
 
@@ -23,12 +24,12 @@ export default class LibraryScreen extends React.Component {
         } 
     }
 
-    
-
+    //Executed after mounting
     componentDidMount(){ 
         this.getSongData()
     }
 
+    //Get all songs
     getSongData = async ()  => {
         try {
             const response = await SongService.getAllSongs()
@@ -42,6 +43,7 @@ export default class LibraryScreen extends React.Component {
         }
     }
 
+    //Options for the app header
     static navigationOptions = ({ navigation }) => {
         return ({
             headerForceInset: { top: 'never', bottom: 'never' },
@@ -66,7 +68,7 @@ export default class LibraryScreen extends React.Component {
     renderItem({item}) {
         return (
             <TouchableOpacity style={styles.listItemContainer} onPress={() => this.props.navigation.navigate('SongView')}>
-                <Text style={styles.listItemText}>{item}</Text> 
+                <Text style={styles.listItemText}>{item.name}</Text> 
             </TouchableOpacity>
         )
     }
@@ -89,10 +91,6 @@ export default class LibraryScreen extends React.Component {
                         {
                             title: 'Songs', 
                             data: this.state.songs,
-                        },
-                        {
-                            title: 'Playlists', 
-                            data: this.state.playlists,
                         },
                     ]}  
                     renderItem={({item}) => this.renderItem({item})}  

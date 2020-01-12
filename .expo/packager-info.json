@@ -1,1 +1,9 @@
-{}
+{
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 11556,
+  "expoServerNgrokUrl": "https://pk-e7a.anonymous.ensemblev1.exp.direct",
+  "packagerNgrokUrl": "https://packager.pk-e7a.anonymous.ensemblev1.exp.direct",
+  "ngrokPid": 6116
+}

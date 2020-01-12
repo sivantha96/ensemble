@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { 
     Text, 
     TextInput,
-    StyleSheet, 
     View, 
     Image,
     StatusBar,
@@ -11,20 +10,40 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import styles from './Styles'
+import SongService from '../../services/songService'
 
 export default class NewSongScreen extends Component {
     //constructor to hold the information in the state
     constructor(props) {
         super()
         this.state = {
+            id: null,
             title: "",
             timeSignature: "",
             tempo: 0,
             key: "",
-            albumArt: "",
-            sections: [],
+            sections: []
         }
     }
+
+    //Executed after mounting
+    //What is the right life cycle method update the section list every time when a new section is added?
+    // componentDidMount(){ 
+    //     this.getSectionData()
+    // }
+
+    //Get all the sections of this song 
+    //Get all the sections that matches with the ID of this song
+    //Should execute when navigating to this screen everytime
+    // getSectionData = async () => {
+    //     try {
+    //         const response = await SectionService
+            
+    //     } catch (error) {
+    //         console.log('error', error)
+    //     }
+    // } 
+
     //options for header of the screen
     static navigationOptions = ({navigation}) => {
         return ({
@@ -46,21 +65,46 @@ export default class NewSongScreen extends Component {
 
     //executed when coming back to the NewSongScreen from the SectionEditScreen and invoke render()
     componentWillReceiveProps(nextProps){
-        this.addSection(nextProps.navigation.state.params.newSection)
+        console.log(nextProps.navigation.state.params)
+        this.addSection(nextProps.navigation.state.params)
+
     }
 
     //add a new section to the section list
-    addSection = (newSection) => {
+    addSection = (props) => {
         this.setState({
-            sections: [...this.state.sections, newSection.title + " - " + newSection.instrument],
-            isEmpty: false,
+            sections: [...this.state.sections, props.title + " - " + props.instrument],
         })
     }
     
     //Discard all changes and go back
+    //Should clear any changes made in the database
     static cancelButton({navigation}){
         navigation.goBack()
     }
+
+    // Experimenting
+    // -----------------------------------------------------------------
+    // Get the last created key
+    // this.setState({id})
+
+    // Function to execute after pressing a button to save
+    // newSongData = async ()  => {
+    //     this.getSongData
+    //     try {
+    //         const response = await SongService.addSong({
+    //             id: this.state.id + 1,
+    //             name: this.state.title,
+    //             duration: 45,
+    //             tempo: 120,
+    //             song_key: 'G'
+    //         })
+    //         console.log('test componentDidMount', response.data)
+            
+    //     } catch (error) {
+    //         console.log('error', error);
+    //     }
+    // }
 
     //Save all changes and go to Song View Screen
     static doneButton({navigation}){
@@ -106,7 +150,6 @@ export default class NewSongScreen extends Component {
                 this.props.navigation.navigate('SectionEdit', 
                     {
                         tempo: this.state.tempo, 
-                        key: this.state.key, 
                         timeSignature: this.state.timeSignature
                     }
                 )}>
@@ -138,7 +181,7 @@ export default class NewSongScreen extends Component {
                 <StatusBar hidden={true}/>
                 <View style={styles.topContainer}>
                     <View style={styles.albumArtContainer}>
-                        <Image style={styles.albumArt} source={require('../../assets/albumArt.jpg')} height={'100%'}/>
+                        <Image style={styles.albumArt} source={require('../../assets/albumArt.jpg')} height={'100%'} onPress= {() => this.newSongData()} />
                     </View>
                     <View style={styles.infoContainer}>
                         <View style={styles.titleContainer}>

@@ -4,12 +4,10 @@ import {
     View,
     Button,
     TextInput,
-    Image,
     SectionList,
     TouchableOpacity,
 } from 'react-native'
 import styles from './Styles'
-import { ScrollView } from 'react-native-gesture-handler'
 
 export default class SectionEditScreen extends Component {
     //constructor to hold the information in the state
@@ -57,7 +55,7 @@ export default class SectionEditScreen extends Component {
 
     //Save all changes and go to Song View Screen
     static doneButton({navigation}){
-        navigation.navigate('NewSong')
+        navigation.navigate('NewSong', this.state)
     }
 
     //render a separator line between items in the list
@@ -65,10 +63,11 @@ export default class SectionEditScreen extends Component {
         return <View style={styles.separator}/>
     };
 
+    //
     renderBar({item}) {
         return (
             <View style={styles.noteContainer}>
-                <Text style={styles.noteText}>{item.name}</Text>
+                <Text style={styles.noteText}>{item}</Text>
             </View>
         )
     }
@@ -178,7 +177,7 @@ export default class SectionEditScreen extends Component {
                         sections={[
                             {
                                 title: '',
-                                data: this.state.section.notations
+                                data: this.state.notations
                             }
                         ]}
                         renderItem={(item,index) => this.renderItem({item,index})}

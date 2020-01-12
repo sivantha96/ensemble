@@ -1,6 +1,7 @@
 const mysql = require('mysql')
 const express = require('express')
 const bodyParser = require('body-parser')
+const db = require('./config/db')
 
 const app = express()
 
@@ -22,16 +23,13 @@ app.get('/songs', (req, res)=>{
     })
 })
 
-const mysqlConnection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'ensemble'
-})
+const mysqlConnection = mysql.createConnection(db)
+
 
 mysqlConnection.connect((err) => {
     if(!err){
         console.log('DB connection suceeded');
+        require('./app/routes')(app, mysqlConnection)
         
     } else {
         console.log('DB connection faild\nError :'+JSON.stringify(err, undefined , 2));
@@ -39,7 +37,9 @@ mysqlConnection.connect((err) => {
     }
 });
 
+
 app.listen(3000,() => {
     console.log('Server running on port: 3000');   
 })
+
 

@@ -25,48 +25,6 @@ export default class SectionEditScreen extends Component {
                 instrument: "",
                 barsPerLine: "",
                 notations: [
-                    {
-                        bar1: "jkhbkbk",
-                        bar2: {
-                            note1: 'C',
-                            note2: 'D',
-                            note3: 'E',
-                            note4: 'F',
-                        },
-                        bar3: {
-                            note1: 'C',
-                            note2: 'D',
-                            note3: 'E',
-                            note4: 'F',
-                        },
-                        bar4: {
-                            note1: 'C',
-                            note2: 'D',
-                            note3: 'E',
-                            note4: 'F',
-                        }
-                    },
-                    {
-                        bar1: 'khdbckbsc',
-                        bar2: {
-                            note1: 'C',
-                            note2: 'D',
-                            note3: 'E',
-                            note4: 'F',
-                        },
-                        bar3: {
-                            note1: 'C',
-                            note2: 'D',
-                            note3: 'E',
-                            note4: 'F',
-                        },
-                        bar4: {
-                            note1: 'C',
-                            note2: 'D',
-                            note3: 'E',
-                            note4: 'F',
-                        }
-                    },
                 ],
             }
         }
@@ -85,9 +43,9 @@ export default class SectionEditScreen extends Component {
             headerLeft: () => (
                 <Button onPress={() => this.cancelButton({navigation})} title="Cancel" color="#FF9500"/>
             ),
-            // headerRight: () => (
-            //     <Button onPress={(isEmpty) => this.doneButton({navigation})} title="Done" color="#FF9500"/>
-            // )
+            headerRight: () => (
+                <Button onPress={(isEmpty) => this.doneButton({navigation})} title="Done" color="#FF9500"/>
+            )
         })
     }
 
@@ -98,7 +56,7 @@ export default class SectionEditScreen extends Component {
 
     //Save all changes and go to Song View Screen
     static doneButton({navigation}){
-        navigation.navigate('NewSong', { newSection: this.state.section})
+        navigation.navigate('NewSong')
     }
 
     //render a separator line between items in the list
@@ -115,15 +73,6 @@ export default class SectionEditScreen extends Component {
                     <View style={styles.noteContainer}>
                         <Text style={styles.noteText}>{this.state.section.notations[num].bar1}</Text>
                     </View>
-                    {/* <View style={styles.noteContainer}>
-                        <Text style={styles.noteText}>{item.bar1.note2}</Text>
-                    </View>
-                    <View style={styles.noteContainer}>
-                        <Text style={styles.noteText}>{item.bar1.note3}</Text>
-                    </View>
-                    <View style={styles.noteContainer}>
-                        <Text style={styles.noteText}>{item.bar1.note1}</Text>
-                    </View> */}
                </TouchableOpacity>
                <TouchableOpacity style={styles.sectionBarContainer} onPress={() => alert("Bar 2")}>
 
@@ -137,19 +86,6 @@ export default class SectionEditScreen extends Component {
             </View>
         )
     }
-
-    //Update bars per line
-    setBarsPerLine({text}){
-
-    }
-
-
-    Table() {
-        barsPerLine = this.state.section.barsPerLine
-        bars = this.state.section.bars
-        
-    }
-
 
     render() {
         return (
@@ -184,7 +120,7 @@ export default class SectionEditScreen extends Component {
                                     returnKeyType= 'done'
                                     placeholder= 'Instrument'
                                     placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({ section: {instrument:text}})}
+                                    onChangeText = {(text) => this.setState(section.instrument=text)}
                                 />
                             </View>
                             <View style={styles.singleButtonContainer}>

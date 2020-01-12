@@ -10,18 +10,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
 
-app.get('/songs', (req, res)=>{
-    mysqlConnection.query('SELECT * From music', (err, rows, fields) => {
-        if(!err){
-            console.log(rows);
-            return res.status(200).send(rows)
-            
-        } else {
-            console.log(err);
-            
-        }
-    })
-})
+
 
 const mysqlConnection = mysql.createConnection(db)
 

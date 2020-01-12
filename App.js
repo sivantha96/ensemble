@@ -3,6 +3,12 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import LoginScreen from './app/components/loginScreen/LoginScreen'
 import LibraryScreen from './app/components/libraryScreen/LibraryScreen'
+import SongViewScreen from './app/components/songViewScreen/SongViewScreen'
+import NewSongScreen from './app/components/newSongScreen/NewSongScreen'
+import NowPlayingScreen from './app/components/nowPlayingScreen/NowPlayingScreen'
+import SectionEditScreen from './app/components/sectionEditScreen/SectionEditScreen'
+import SectionViewScreen from './app/components/sectionViewScreen/SectionViewScreen'
+import BarEditScreen from './app/components/barEditScreen/BarEditScreen'
 
 if(__DEV__) {
   import("./app/ReactotronConfig")
@@ -18,11 +24,33 @@ const RootStack = createStackNavigator(
     },
     Library: {
       screen: LibraryScreen,
+    },
+    SongView: {
+      screen: SongViewScreen
+    },
+    NewSong: {
+      screen: NewSongScreen
+    },
+    NowPlaying: {
+      screen: NowPlayingScreen
+    },
+    SectionEdit: {
+      screen: SectionEditScreen
+    },
+    SectionView: {
+      screen: SectionViewScreen
+    },
+    SongView: {
+      screen: SongViewScreen
+    },
+    BarEdit: {
+      screen: BarEditScreen
     }
+
   },
   { 
-    initialRouteName: 'Login', 
-    mode: 'modal',
+    initialRouteName: 'Library', 
+    mode: 'card',
   },
 )
 

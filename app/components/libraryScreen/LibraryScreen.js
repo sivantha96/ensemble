@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
     StyleSheet,
     Text,
@@ -7,18 +7,45 @@ import {
     StatusBar,
     SectionList,
     TouchableOpacity,
-} from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+} from 'react-native'
+import { SafeAreaView } from 'react-navigation'
+import SongService from '../../services/songService'
 
 SafeAreaView.setStatusBarHeight(0);
 
 export default class LibraryScreen extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            songs: [],
+            playlists: [],
+        } 
+    }
+
+    
+
+    componentDidMount(){ 
+        this.getSongData()
+    }
+
+    getSongData = async ()  => {
+        try {
+            const response = await SongService.getAllSongs()
+            this.setState({
+                songs: [... response.data]
+            })
+            console.log('test componentDidMount', response.data)
+            
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+
     static navigationOptions = ({ navigation }) => {
         return {
             title: 'Library',
             headerRight: () => (
                 <View style={{flex: 1, flexDirection: 'row', paddingRight:5}}>
-                    <StatusBar hidden={true}/>
                     <Button
                         onPress={ () => {
                             navigation.navigate('NewSong', 
@@ -48,18 +75,7 @@ export default class LibraryScreen extends React.Component {
                             {
                                 title: 'Songs', 
                                 data: 
-                                [
-                                    'ALTERED',
-                                    'ABBY',
-                                    'ACTION',
-                                    'AMUCK',
-                                    'ANGUISH',
-                                    'ALTERED',
-                                    'ABBY',
-                                    'ACTION',
-                                    'AMUCK',
-                                    'ANGUISH'
-                                ]
+                               this.state.songs
                             },
                             {
                                 title: 'Playlists', 
@@ -81,8 +97,8 @@ export default class LibraryScreen extends React.Component {
                         renderItem={({item}) => 
                         <View style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'black'}} onPress={() => alert('This is an Item!')} >
                             <View>
-                                <TouchableOpacity onPress={() => alert('This is a button!')}>
-                                    <Text style={styles.itemText}>{item}</Text> 
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('SongView')}>
+                                    <Text style={styles.itemText}>{item.name}</Text> 
                                 </TouchableOpacity>
                             </View>
                         </View>}  

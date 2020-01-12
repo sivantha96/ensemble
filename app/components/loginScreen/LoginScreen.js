@@ -9,7 +9,6 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
 } from 'react-native'
-import SongService from '../../services/songService'
 
 export default class LoginScreen extends React.Component {
     //because we want to save information in the state of the class
@@ -21,19 +20,6 @@ export default class LoginScreen extends React.Component {
         }
     }
 
-    getData = async ()  => {
-        try {
-            const response = await SongService.getSongs()
-            console.log('test componentDidMount', response.data)
-            
-        } catch (error) {
-            console.log('error', error);
-        }
-    }
-
-    componentDidMount() {
-        this.getData()
-    }
 
     logIn() {
         if(this.state.username === 'admin' && this.state.password === 'admin')
@@ -79,7 +65,6 @@ export default class LoginScreen extends React.Component {
                     enablesReturnKeyAutomatically = {true}
                     keyboardAppearance= 'dark'
                 />
-               {/* should validate the user */}
                 <TouchableOpacity style={styles.button} onPress={() => this.logIn()}>
                     <Text style={styles.blackBody}>Log in</Text>
                 </TouchableOpacity>

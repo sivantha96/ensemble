@@ -2,8 +2,8 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 16236,
-  "expoServerNgrokUrl": "https://e3-beb.anonymous.ensemblev1.exp.direct",
-  "packagerNgrokUrl": "https://packager.e3-beb.anonymous.ensemblev1.exp.direct",
-  "ngrokPid": 12496
+  "packagerPid": 17656,
+  "expoServerNgrokUrl": "https://ge-tcr.anonymous.ensemblev1.exp.direct",
+  "packagerNgrokUrl": "https://packager.ge-tcr.anonymous.ensemblev1.exp.direct",
+  "ngrokPid": 1308
 }

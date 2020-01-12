@@ -12,17 +12,6 @@ export default class Api {
     });
   }
 
-  set token(token) {
-    this.axiosApi.defaults.headers.common.Authorization = `Bearer ${token}`;
-  }
-
-  set tokenRetriever(getAccessToken) {
-    this.getAccessToken = getAccessToken;
-  }
-
-  set baseUrl(baseUrl) {
-    this.axiosApi.defaults.baseURL = baseUrl;
-  }
 
   get axios() {
     return this.axiosApi;

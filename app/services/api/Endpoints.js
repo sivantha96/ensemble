@@ -1,9 +1,10 @@
 const SONGS = '/songs';
 
   export const SongEndpoints = {
-    create: '',
-    update: '',
-    delete: '',
-    get: `${SONGS}`,
+    create:  `${SONGS}/add`,
+    update:  `${SONGS}/update`,
+    delete:  `${SONGS}/delete`,
+    getAll: `${SONGS}`,
+    getSong: `${SONGS}/getsong`,
   };
   

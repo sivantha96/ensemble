@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
 } from 'react-native'
 import styles from './Styles'
+import { ScrollView } from 'react-native-gesture-handler'
 
 export default class SectionEditScreen extends Component {
     //constructor to hold the information in the state
@@ -21,13 +22,29 @@ export default class SectionEditScreen extends Component {
             notationType: "",
             instrument: "",
             barsPerLine: "",
-            notations: [
+            notations: [ 
                 {
-                    name: "test"
+                    note1: 'C',
+                    note2: 'D',
+                    note3: 'E',
+                    note4: 'F'
+                },
+                {
+                    note1: 'G',
+                    note2: 'H',
+                    note3: 'I',
+                    note4: 'J'
+                },
+                {
+                    note1: 'G',
+                    note2: 'H',
+                    note3: 'I',
+                    note4: 'J'
                 }
             ],
         }
     }
+
 
     //options for header of the screen
     static navigationOptions = ({navigation}) => {
@@ -58,37 +75,23 @@ export default class SectionEditScreen extends Component {
         navigation.navigate('NewSong', this.state)
     }
 
-    //render a separator line between items in the list
-    renderSeparator = () => {
-        return <View style={styles.separator}/>
-    };
-
-    //
-    renderBar({item}) {
+    //Return a view of a single bar
+    renderBar(bar) {
         return (
-            <View style={styles.noteContainer}>
-                <Text style={styles.noteText}>{item}</Text>
-            </View>
-        )
-    }
-
-    //render an item in the list
-    renderItem({item, index}) {
-        num = index
-        return (
-            <View style={styles.listSectionContainer}>
-               <TouchableOpacity style={styles.sectionBarContainer} onPress={() => alert("Bar 1")}>
-                    {({item}) => this.renderBar({item})}
-               </TouchableOpacity>
-               <TouchableOpacity style={styles.sectionBarContainer} onPress={() => alert("Bar 2")}>
-
-               </TouchableOpacity>
-               <TouchableOpacity style={styles.sectionBarContainer} onPress={() => alert("Bar 3")}>
-
-               </TouchableOpacity>
-               <TouchableOpacity style={styles.sectionBarContainer} onPress={() => alert("Bar 4")}>
-
-               </TouchableOpacity>
+            <View style={styles.barContainer}>
+                <View style={styles.noteContainer}>
+                    <Text style={styles.noteText}>{bar.note1}</Text>
+                </View>
+                <View style={styles.noteContainer}>
+                    <Text style={styles.noteText}>{bar.note2}</Text>
+                </View>
+                <View style={styles.noteContainer}>
+                    <Text style={styles.noteText}>{bar.note3}</Text>
+                </View>
+                <View style={styles.noteContainer}>
+                    <Text style={styles.noteText}>{bar.note4}</Text>
+                </View>
+                
             </View>
         )
     }
@@ -172,17 +175,17 @@ export default class SectionEditScreen extends Component {
                         </View>
                     </View>
                 </View>
+
                 <View style={styles.bottomContainer}>
-                    <SectionList
-                        sections={[
+                    <ScrollView>
+                        <View style={styles.wrappingContainer}>
                             {
-                                title: '',
-                                data: this.state.notations
+                                this.state.notations.map(bar => this.renderBar(bar))
+                            
                             }
-                        ]}
-                        renderItem={(item,index) => this.renderItem({item,index})}
-                        keyExtractor={(item, index) => index}
-                    />
+                        </View>
+                    </ScrollView>
+                        
                 </View>
             </View>
         )

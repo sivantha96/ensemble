@@ -160,23 +160,32 @@ export default StyleSheet.create({
         margin: 3,
         flex:5,
         flexDirection: 'column',
+        
     },
-    sectionBarContainer: {
-        flexDirection: 'row',
+    wrappingContainer: {
         flex: 1,
-        padding: 2,
-        height: 50,
-        marginVertical: 8,
-        borderLeftWidth: 0.5,
-        borderRightWidth: 0.5,
-        borderColor: '#707070',
+        flexDirection: "row",
+        flexWrap: 'wrap'
     },
     noteContainer: {
+        flex: 1,
         textAlign: 'center',
         alignItems: 'center',
         justifyContent: 'center',
     },
     noteText: {
+        fontSize: 20,
         color: 'white'
-    }
+    },
+    barContainer: {
+        flexDirection: 'row',
+        flex: 1,
+        height: 50,
+        maxWidth: ((DEVICE_WIDTH - 10) /4),
+        marginVertical: 8,
+        borderLeftWidth: 0.5,
+        borderRightWidth: 0.5,
+        borderColor: '#707070',
+        padding: 2,
+    },
 })

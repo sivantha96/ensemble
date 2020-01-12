@@ -16,17 +16,18 @@ export default class SectionEditScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            section: {
-                title: "",
-                timeSignature: props.navigation.getParam('timeSignature', ''),
-                tempo: props.navigation.getParam('tempo', 0),
-                bars: 0,
-                notationType: "",
-                instrument: "",
-                barsPerLine: "",
-                notations: [
-                ],
-            }
+            title: "",
+            timeSignature: props.navigation.getParam('timeSignature', ''),
+            tempo: props.navigation.getParam('tempo', 0),
+            bars: 0,
+            notationType: "",
+            instrument: "",
+            barsPerLine: "",
+            notations: [
+                {
+                    name: "test"
+                }
+            ],
         }
     }
 
@@ -64,15 +65,21 @@ export default class SectionEditScreen extends Component {
         return <View style={styles.separator}/>
     };
 
+    renderBar({item}) {
+        return (
+            <View style={styles.noteContainer}>
+                <Text style={styles.noteText}>{item.name}</Text>
+            </View>
+        )
+    }
+
     //render an item in the list
     renderItem({item, index}) {
         num = index
         return (
             <View style={styles.listSectionContainer}>
                <TouchableOpacity style={styles.sectionBarContainer} onPress={() => alert("Bar 1")}>
-                    <View style={styles.noteContainer}>
-                        <Text style={styles.noteText}>{this.state.section.notations[num].bar1}</Text>
-                    </View>
+                    {({item}) => this.renderBar({item})}
                </TouchableOpacity>
                <TouchableOpacity style={styles.sectionBarContainer} onPress={() => alert("Bar 2")}>
 

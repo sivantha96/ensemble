@@ -192,16 +192,15 @@ export default StyleSheet.create({
         justifyContent: 'center',
         aspectRatio: 1,
         borderRadius: 100,
-        padding: 10,
-        borderWidth: 26,
-        borderColor: '#FF9500'
+        padding: 2,
     },
-    metronomeContainer2: {
+    metronomeRound: {
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         aspectRatio: 1,
         borderRadius: 100,
+        backgroundColor: '#FF9500',
         padding: 10,
         borderWidth: 1,
         borderColor: '#FF9500'
@@ -222,11 +221,13 @@ export default StyleSheet.create({
     },
     songNameContainer: {
         flex: 1,
-        
+        marginTop: 5,
+        alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center'
     },
     controls: {
+        marginHorizontal: 20,
         flex: 2,
         flexDirection: 'row'
     },
@@ -237,10 +238,13 @@ export default StyleSheet.create({
         flexDirection: 'row',
     },
     middleLineContainer: {
-        padding: 10,
+        margin: 10,
+        borderColor: '#FF950030',
+        borderWidth: 0.5,
         alignItems: 'center',
         flex: 1,
         flexDirection: 'row',
+        backgroundColor: '#82858325',
     },
     bottomLineContainer:{
         padding: 10,

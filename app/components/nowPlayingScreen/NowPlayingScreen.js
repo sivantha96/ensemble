@@ -12,6 +12,7 @@ export default class NowPlayingScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            metronome: false,
             min: 0,
             sec: 0,
             count: 0,
@@ -165,11 +166,18 @@ export default class NowPlayingScreen extends Component {
         }
     }
 
+    metronome = () => {
+        this.setState(prevState => ({
+            metronome: !(prevState.metronome)
+        }))
+    }
+
     componentDidMount() {
         this.slideLine()
         this.slideLine()
         setInterval(this.slideLine, this.state.slideTime)
         setInterval(this.clock, 1000)
+        setInterval(this.metronome, 800)
     }
 
 
@@ -199,6 +207,18 @@ export default class NowPlayingScreen extends Component {
         )
     }
 
+    //Render the metronome
+    renderMetronome = () => {
+        if (this.state.metronome) {
+            return (
+                <View style={styles.metronomeRound}></View>
+            )
+        } else {
+            return (<View></View>)
+        }
+        
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -215,9 +235,21 @@ export default class NowPlayingScreen extends Component {
                             <View style={styles.songNameContainer}>
                                 <Text style={{color: 'white', textAlign: 'center', fontSize: 20}}>Unmadini - BnS</Text>
                             </View>
-                            {/* <View style={styles.controls}>
+                            <View style={styles.controls}>
+                                <View style={{flex:1, padding: 10,  justifyContent:'center'}}>
+                                    <Image style={{height: '100%', width:null, resizeMode: 'contain'}} source={require('../../assets/back.png')}  onPress= {() => this.newSongData()} /> 
+                                </View>
+                                <View style={{ flex:1, padding: 10,  justifyContent:'center'}}>
+                                    <Image style={{height: '60%', width:null, resizeMode: 'contain'}} source={require('../../assets/play.png')}  onPress= {() => this.newSongData()} /> 
+                                </View>
+                                <View style={{ flex:1, padding: 10, justifyContent:'center'}}>
+                                    <Image style={{height: '60%', width:'100%', resizeMode: 'contain'}} source={require('../../assets/pause.png')}  onPress= {() => this.newSongData()} /> 
+                                </View>
+                                <View style={{ flex:1, padding: 10,  justifyContent:'center'}}>
+                                    <Image style={{height: '100%', width:null, resizeMode: 'contain'}} source={require('../../assets/next.png')}  onPress= {() => this.newSongData()} /> 
+                                </View>
                                 
-                            </View> */}
+                            </View>
                         </View>
                         <View style={styles.timeContainer}>
                             <Text style={styles.timeText}>72</Text>
@@ -225,10 +257,10 @@ export default class NowPlayingScreen extends Component {
                         </View>
                     </View>
                     <View  style={styles.appHeaderRightContainer}>
-                       <View style={styles.metronomeContainer2}>
-                            <View style={styles.metronomeContainer}></View>
-                            {/* <Text style={styles.metronomeText}></Text> */}
-                       </View>
+                        <View style={styles.metronomeContainer}>
+                        {this.renderMetronome()}
+                        </View>
+                        
                     </View>
                 </View>
                 <View style={styles.appContainer}>

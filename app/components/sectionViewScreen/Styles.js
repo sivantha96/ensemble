@@ -1,7 +1,10 @@
+
+
 import { 
     StyleSheet,
     Dimensions,  
 } from 'react-native'
+import { Header } from 'react-navigation-stack';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -39,7 +42,15 @@ export default StyleSheet.create({
         borderRadius: 10,
     },
     //Container of the title in the header bar of the app
+    appHeaderContainer: {
+        height: Header.HEIGHT,
+        flexDirection: 'row',
+        backgroundColor: '#212121'
+    },
+    //Container of the title in the header bar of the app
     appHeaderTitleContainer: {
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     //Title in the header bar of the app
@@ -53,14 +64,14 @@ export default StyleSheet.create({
         marginLeft: 10,
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
     //Right container of the title in the header bar of the app
     appHeaderRightContainer: {
-        marginRight: 10,
+        marginLeft: 10,
         flex: 1,
         flexDirection: 'row-reverse',
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
     //Separator line 
     separator: {
@@ -109,7 +120,7 @@ export default StyleSheet.create({
     //Container of a title of a song/section
     titleContainer: {
         flex:1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         padding: 10,
     },
     //Input of a title of a song/section
@@ -125,17 +136,20 @@ export default StyleSheet.create({
     },
     //Container of a SINGLE button in the button container
     singleButtonContainer: {
-        marginLeft: 10,
+        padding: 2,
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'flex-end',
         justifyContent: 'center',
         alignContent: 'center',
     },
     //Input of a button type input
     buttonInput: {
         width: '100%',
+        maxHeight: 45,
         aspectRatio: 2,
-        padding:5,
+        padding:2,
+        alignItems:'center',
+        justifyContent: 'center',
         textAlign: 'center',
         borderColor: '#FF9500', 
         borderWidth: 1, 
@@ -159,10 +173,9 @@ export default StyleSheet.create({
         flex:5,
         flexDirection: 'column',
     },
-
       //Section title in the info container
       sectionViewTitle: {
-        fontSize: 20,
+        fontSize: 50,
         color: '#fff',
     },
 
@@ -170,5 +183,31 @@ export default StyleSheet.create({
      sectionViewDetails: {
         fontSize: 17,
         color: '#fff',
+    },
+    wrappingContainer: {
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: 'wrap'
+    },
+    noteContainer: {
+        flex: 1,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    noteText: {
+        fontSize: 20,
+        color: 'white'
+    },
+    barContainer: {
+        
+        width: ((DEVICE_WIDTH - 10) /4),
+        height: 50,
+        flexDirection: 'row',
+        marginVertical: 8,
+        borderLeftWidth: 0.5,
+        borderRightWidth: 0.5,
+        borderColor: '#707070',
+        padding: 2,
     },
 })

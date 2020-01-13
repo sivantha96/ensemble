@@ -2,6 +2,7 @@ import {
     StyleSheet,
     Dimensions,  
 } from 'react-native'
+import { Header } from 'react-navigation-stack';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -39,7 +40,15 @@ export default StyleSheet.create({
         borderRadius: 10,
     },
     //Container of the title in the header bar of the app
+    appHeaderContainer: {
+        height: Header.HEIGHT,
+        flexDirection: 'row',
+        backgroundColor: '#212121'
+    },
+    //Container of the title in the header bar of the app
     appHeaderTitleContainer: {
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     //Title in the header bar of the app
@@ -53,14 +62,14 @@ export default StyleSheet.create({
         marginLeft: 10,
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
     //Right container of the title in the header bar of the app
     appHeaderRightContainer: {
-        marginRight: 10,
+        marginLeft: 10,
         flex: 1,
         flexDirection: 'row-reverse',
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
     //Separator line 
     separator: {

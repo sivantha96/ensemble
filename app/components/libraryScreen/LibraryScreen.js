@@ -22,8 +22,7 @@ export default class LibraryScreen extends React.Component {
         super(props)
         this.state = {
             title: 'Library',
-            songs: [
-            ],
+            songs: [],
         } 
     }
 
@@ -54,7 +53,7 @@ export default class LibraryScreen extends React.Component {
     //render an item in the list
     renderItem({item}) {
         return (
-            <TouchableOpacity style={styles.listItemContainer} onPress={() => this.props.navigation.navigate('SongView', {refresh: () => this.getSongData()})}>
+            <TouchableOpacity style={styles.listItemContainer} onPress={() => this.props.navigation.navigate('SongView', {songId: item.id, songTitle: item.name, tempo: item.tempo, song_key: item.song_key, time_signature: item.time_signature,})}>
                 <Text style={styles.listItemText}>{item.name}</Text> 
             </TouchableOpacity>
         )

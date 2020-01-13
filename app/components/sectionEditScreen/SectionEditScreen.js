@@ -36,6 +36,26 @@ export default class SectionEditScreen extends Component {
         };
 
 
+    //get bAR DATA
+    getBarData = () => {
+        const newBar = [{ note_1: this.props.navigation.getParam('note_1'),  note_2: this.props.navigation.getParam('note_2'),  note_3: this.props.navigation.getParam('note_3'),  note_4: this.props.navigation.getParam('note_4'), }]
+        for (let i = 0; i < this.state.noOfBars-1; i++) {
+            newBar.push({
+                note_1: '-',
+                note_2: '-',
+                note_3: '-',
+                note_4: '-',})
+        }
+        if (newBar[0].note_1 == undefined) {
+            
+        }
+        else {
+            this.setState({
+                bars: [... newBar]
+            })
+        }  
+    }
+
     //Discard all changes and go back
     cancelButton(){
         this.props.navigation.goBack()
@@ -43,7 +63,7 @@ export default class SectionEditScreen extends Component {
 
     //Save all changes and go to Song View Screen
     doneButton(){
-        this.props.navigation.navigate('NewSong')
+        this.props.navigation.navigate('NewSong', {sectionTitle: this.state.title, instrument: this.state.instrument})
     }
 
     //Return a view of a single bar
@@ -100,7 +120,7 @@ export default class SectionEditScreen extends Component {
                 <View style={styles.appContainer}>
                     <NavigationEvents
                         //Refresh here
-                        // onDidFocus={payload => this.getSectionData()}
+                        onDidFocus={payload => this.getBarData()}
                     />
                     <View style={styles.topContainer}>
                         <View style={styles.infoContainer}>
@@ -187,7 +207,6 @@ export default class SectionEditScreen extends Component {
                     </View>
                 </View>
             </View>
-            
         )
     }
 }

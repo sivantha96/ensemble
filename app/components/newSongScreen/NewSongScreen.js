@@ -25,8 +25,22 @@ export default class NewSongScreen extends Component {
             timeSignature: "",
             tempo: 0,
             key: "",
-            sections: []
+            sections: [],
         }
+    }
+
+    getSectionData = () => {
+        const newSection = [{ name: this.props.navigation.getParam('sectionTitle'), instrument: this.props.navigation.getParam('instrument')}]
+        if (newSection[0].name == undefined) {
+            
+        }
+        else {
+            this.setState({
+                sections: [... newSection]
+            })
+        }
+        
+        
     }
 
     // Save the new song on the database
@@ -35,7 +49,9 @@ export default class NewSongScreen extends Component {
             const response = await SongService.addSong({
                 name: this.state.title,
                 duration: 45,
-                tempo: 120,
+                tempo: this.state.tempo,
+                song_key: this.state.key,
+                time_signature: this.state.timeSignature
             })
             this.props.navigation.state.params.refresh()
             console.log('test componentDidMount', response.data)
@@ -48,7 +64,7 @@ export default class NewSongScreen extends Component {
     //Save all changes and go to Song View Screen
     doneButton(){
         this.newSongData()
-        this. props.navigation.navigate('SongView')
+        this.props.navigation.navigate('SongView')
     }
 
     //render a separator line between items in the list
@@ -58,9 +74,11 @@ export default class NewSongScreen extends Component {
 
     //Discard all changes and go back
     //Should clear any changes made in the database
-    static cancelButton({navigation}){
-        navigation.goBack()
+    cancelButton(){
+        this.props.navigation.goBack()
     }
+
+
 
     //Render list header item - Add new section
     renderListHeader({item}){
@@ -108,7 +126,7 @@ export default class NewSongScreen extends Component {
                     
                 </View>
                 <View style={styles.listItemContainer}>
-                    <Text style={styles.listItemText}>{item}</Text>
+                    <Text style={styles.listItemText}>{item.name + ' - ' + item.instrument}</Text> 
                 </View>
             </TouchableOpacity>
         )
@@ -140,7 +158,7 @@ export default class NewSongScreen extends Component {
                 <View style={styles.appContainer}>
                     <NavigationEvents
                             //Refresh here
-                            // onDidFocus={payload => this.getSectionData()}
+                            onDidFocus={payload => this.getSectionData()}
                         />
                     <StatusBar hidden={true}/>
                     <View style={styles.topContainer}>
@@ -203,7 +221,7 @@ export default class NewSongScreen extends Component {
                                 }
                             ]}
                             ItemSeparatorComponent={this.renderSeparator}
-                            renderItem={({item,index}) => this.renderItem({item,index})}
+                            renderItem={({item}) => this.renderItem({item})} 
                             ListHeaderComponent={(item) => this.renderListHeader({item})}
                         />
                     </View>

@@ -66,7 +66,6 @@ export default class LoginScreen extends React.Component {
                     enablesReturnKeyAutomatically = {true}
                     keyboardAppearance= 'dark'
                 />
-
                 <TouchableOpacity style={styles.button} onPress={() => this.logIn()}>
                     <Text style={styles.blackBody}>Log in</Text>
                 </TouchableOpacity>

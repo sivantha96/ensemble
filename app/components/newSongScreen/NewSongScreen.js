@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { 
     Text, 
     TextInput,
-    StyleSheet, 
     View, 
     Image,
     StatusBar,
@@ -10,62 +9,46 @@ import {
     SectionList,
     TouchableOpacity,
 } from 'react-native'
+import {
+    NavigationEvents
+} from 'react-navigation'
 import styles from './Styles'
+import SongService from '../../services/songService'
 
 export default class NewSongScreen extends Component {
     //constructor to hold the information in the state
     constructor(props) {
-        super()
+        super(props)
         this.state = {
+            headerTitle: props.navigation.getParam('titleSong', 'New Song'),
             title: "",
             timeSignature: "",
             tempo: 0,
             key: "",
-            albumArt: "",
-            sections: [],
+            sections: []
         }
     }
-    //options for header of the screen
-    static navigationOptions = ({navigation}) => {
 
-        return ({
-            headerForceInset: { top: 'never', bottom: 'never' },
-            title: navigation.getParam('songTitle', 'New Song'),
-            headerTitleContainerStyle: styles.appHeaderTitleContainer,
-            headerTitleAlign: 'center',
-            headerTitleStyle: styles.appHeaderTitle,   
-            headerLeftContainerStyle: styles.appHeaderLeftContainer,
-            headerRightContainerStyle: styles.appHeaderRightContainer,
-            headerLeft: () => (
-                <Button onPress={() => this.cancelButton({navigation})} title="Cancel" color="#FF9500"/>
-            ),
-            headerRight: () => (
-                <Button onPress={(isEmpty) => this.doneButton({navigation})} title="Done" color="#FF9500"/>
-            )
-        })
-    }
-
-    //executed when coming back to the NewSongScreen from the SectionEditScreen and invoke render()
-    componentWillReceiveProps(nextProps){
-        this.addSection(nextProps.navigation.state.params.newSection)
-    }
-
-    //add a new section to the section list
-    addSection = (newSection) => {
-        this.setState({
-            sections: [...this.state.sections, newSection.title + " - " + newSection.instrument],
-            isEmpty: false,
-        })
-    }
-    
-    //Discard all changes and go back
-    static cancelButton({navigation}){
-        navigation.goBack()
+    // Save the new song on the database
+    newSongData = async ()  => {
+        try {
+            const response = await SongService.addSong({
+                name: this.state.title,
+                duration: 45,
+                tempo: 120,
+            })
+            this.props.navigation.state.params.refresh()
+            console.log('test componentDidMount', response.data)
+            
+        } catch (error) {
+            console.log('error', error);
+        }
     }
 
     //Save all changes and go to Song View Screen
-    static doneButton({navigation}){
-        navigation.navigate('SongView')
+    doneButton(){
+        this.newSongData()
+        this. props.navigation.navigate('SongView')
     }
 
     //render a separator line between items in the list
@@ -73,18 +56,27 @@ export default class NewSongScreen extends Component {
         return <View style={styles.separator}/>
     };
 
+    //Discard all changes and go back
+    //Should clear any changes made in the database
+    static cancelButton({navigation}){
+        navigation.goBack()
+    }
+
     //Render list header item - Add new section
     renderListHeader({item}){
         return (
             <View>
-                <TouchableOpacity style={styles.listSectionContainer} onPress={() => 
-                this.props.navigation.navigate('SectionEdit', 
-                    {
-                        tempo: this.state.tempo, 
-                        key: this.state.key, 
-                        timeSignature: this.state.timeSignature
-                    }
-                )}>
+                <TouchableOpacity 
+                    style={styles.listSectionContainer} 
+                    onPress={() => this.props.navigation.navigate(
+                        'SectionEdit', 
+                        {
+                            tempo: this.state.tempo, 
+                            key: this.state.key, 
+                            timeSignature: this.state.timeSignature
+                        }
+                    )
+                }>
                     <View>
                         <View style={styles.addNewButtonContainer}>
                             <Text style={styles.addNewButton}>⊕</Text>
@@ -95,8 +87,7 @@ export default class NewSongScreen extends Component {
                     </View>
                 </TouchableOpacity>
                 <View style={styles.separator}/>
-            </View>
-            
+            </View>  
         )
     }
 
@@ -107,7 +98,6 @@ export default class NewSongScreen extends Component {
                 this.props.navigation.navigate('SectionEdit', 
                     {
                         tempo: this.state.tempo, 
-                        key: this.state.key, 
                         timeSignature: this.state.timeSignature
                     }
                 )}>
@@ -135,76 +125,88 @@ export default class NewSongScreen extends Component {
 
     render() {
         return (
-            <View style={styles.appContainer}>
-                <StatusBar hidden={true}/>
-                <View style={styles.topContainer}>
-                    <View style={styles.albumArtContainer}>
-                        <Image style={styles.albumArt} source={require('../../assets/albumArt.jpg')} height={'100%'}/>
+            <View style={{flex: 1}}>
+                <View style={styles.appHeaderContainer}>
+                    <View style={styles.appHeaderLeftContainer}>
+                        <Button onPress={() => this.cancelButton()} title="Cancel" color="#FF9500"/>
                     </View>
-                    <View style={styles.infoContainer}>
-                        <View style={styles.titleContainer}>
-                            <TextInput style={styles.titleInput}
-                            enablesReturnKeyAutomatically = {true}
-                            keyboardAppearance= 'dark'
-                            returnKeyType= 'done'
-                            placeholder= 'Untitled Song'
-                            placeholderTextColor= '#fff'
-                            onChangeText = {(text) => this.setState({ title: text})}
-                            />
+                    <View  style={styles.appHeaderTitleContainer}>
+                        <Text style={styles.appHeaderTitle}>{this.state.headerTitle}</Text>
+                    </View>
+                    <View  style={styles.appHeaderRightContainer}>
+                        <Button onPress={() => this.doneButton()} title="Done" color="#FF9500"/>
+                    </View>
+            </View>
+                <View style={styles.appContainer}>
+                    <NavigationEvents
+                            //Refresh here
+                            // onDidFocus={payload => this.getSectionData()}
+                        />
+                    <StatusBar hidden={true}/>
+                    <View style={styles.topContainer}>
+                        <View style={styles.albumArtContainer}>
+                            <Image style={styles.albumArt} source={require('../../assets/albumArt.jpg')} height={'100%'} onPress= {() => this.newSongData()} />
                         </View>
-                        <View style={styles.manyButtonContainer}>
-                            <View style={styles.singleButtonContainer}>
-                                <TextInput style={styles.buttonInput}
+                        <View style={styles.infoContainer}>
+                            <View style={styles.titleContainer}>
+                                <TextInput style={styles.titleInput}
                                 enablesReturnKeyAutomatically = {true}
                                 keyboardAppearance= 'dark'
                                 returnKeyType= 'done'
-                                placeholder= 'Tempo'
-                                placeholderTextColor= '#FF9500'
-                                onChangeText = {(text) => this.setState({ tempo: text})}
+                                placeholder= 'Untitled Song'
+                                placeholderTextColor= '#fff'
+                                onChangeText = {(text) => this.setState({ title: text})}
                                 />
                             </View>
-                            <View style={styles.singleButtonContainer}>
-                                <TextInput style={styles.buttonInput}
-                                enablesReturnKeyAutomatically = {true}
-                                keyboardAppearance= 'dark'
-                                returnKeyType= 'done'
-                                placeholder= 'Time Sig.'
-                                placeholderTextColor= '#FF9500'
-                                onChangeText = {(text) => this.setState({ timeSignature: text})}
-                                />
+                            <View style={styles.manyButtonContainer}>
+                                <View style={styles.singleButtonContainer}>
+                                    <TextInput style={styles.buttonInput}
+                                    enablesReturnKeyAutomatically = {true}
+                                    keyboardAppearance= 'dark'
+                                    returnKeyType= 'done'
+                                    placeholder= 'Tempo'
+                                    placeholderTextColor= '#FF9500'
+                                    onChangeText = {(text) => this.setState({ tempo: text})}
+                                    />
+                                </View>
+                                <View style={styles.singleButtonContainer}>
+                                    <TextInput style={styles.buttonInput}
+                                    enablesReturnKeyAutomatically = {true}
+                                    keyboardAppearance= 'dark'
+                                    returnKeyType= 'done'
+                                    placeholder= 'Time Sig.'
+                                    placeholderTextColor= '#FF9500'
+                                    onChangeText = {(text) => this.setState({ timeSignature: text})}
+                                    />
+                                </View>
+                                <View style={styles.singleButtonContainer}>
+                                    <TextInput style={styles.buttonInput}
+                                    enablesReturnKeyAutomatically = {true}
+                                    keyboardAppearance= 'dark'
+                                    returnKeyType= 'done'
+                                    placeholder= 'Key'
+                                    placeholderTextColor= '#FF9500'
+                                    onChangeText = {(text) => this.setState({ key: text})}
+                                    />
+                                </View>
+                                <View style={styles.singleButtonContainer}></View>
+                                <View style={styles.singleButtonContainer}></View>
                             </View>
-                            <View style={styles.singleButtonContainer}>
-                                <TextInput style={styles.buttonInput}
-                                enablesReturnKeyAutomatically = {true}
-                                keyboardAppearance= 'dark'
-                                returnKeyType= 'done'
-                                placeholder= 'Key'
-                                placeholderTextColor= '#FF9500'
-                                onChangeText = {(text) => this.setState({ key: text})}
-                                />
-                            </View>
-                            <View style={styles.singleButtonContainer}>
-
-                            </View>
-                            <View style={styles.singleButtonContainer}>
-
-                            </View>
-                        </View>
-                    </View> 
-                </View>
-                <View style={styles.bottomContainer}>
-                    <SectionList
-                        sections={[
-                            {
-                                title: '',
-                                data: this.state.sections
-                            }
-                        ]}
-                        ItemSeparatorComponent={this.renderSeparator}
-                        renderItem={({item,index}) => this.renderItem({item,index})}  
-                        keyExtractor={(item, index) => index}
-                        ListHeaderComponent={(item) => this.renderListHeader({item})}
-                    />
+                        </View> 
+                    </View>
+                    <View style={styles.bottomContainer}>
+                        <SectionList
+                            sections={[
+                                {
+                                    title: '',
+                                    data: this.state.sections
+                                }
+                            ]}
+                            ItemSeparatorComponent={this.renderSeparator}
+                            renderItem={({item,index}) => this.renderItem({item,index})}
+                            ListHeaderComponent={(item) => this.renderListHeader({item})}
+                        />
+                    </View>
                 </View>
             </View>
         )

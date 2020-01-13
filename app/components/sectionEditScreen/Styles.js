@@ -2,6 +2,7 @@ import {
     StyleSheet,
     Dimensions,  
 } from 'react-native'
+import { Header } from 'react-navigation-stack';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -38,8 +39,15 @@ export default StyleSheet.create({
         aspectRatio: 1,
         borderRadius: 10,
     },
+    appHeaderContainer: {
+        height: Header.HEIGHT,
+        flexDirection: 'row',
+        backgroundColor: '#212121'
+    },
     //Container of the title in the header bar of the app
     appHeaderTitleContainer: {
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     //Title in the header bar of the app
@@ -53,14 +61,14 @@ export default StyleSheet.create({
         marginLeft: 10,
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
     //Right container of the title in the header bar of the app
     appHeaderRightContainer: {
-        marginRight: 10,
+        marginLeft: 10,
         flex: 1,
         flexDirection: 'row-reverse',
-        alignItems: 'center',
+        alignItems: 'flex-start',
     },
     //Separator line 
     separator: {
@@ -114,6 +122,7 @@ export default StyleSheet.create({
     },
     //Input of a title of a song/section
     titleInput: {
+        marginLeft:5,
         fontSize: 25,
         color: '#fff',
     },
@@ -125,7 +134,7 @@ export default StyleSheet.create({
     },
     //Container of a SINGLE button in the button container
     singleButtonContainer: {
-        marginLeft: 10,
+        marginHorizontal:3, 
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -156,7 +165,35 @@ export default StyleSheet.create({
         borderBottomWidth: 0.5,
     },
     bottomContainer: {
+        margin: 3,
         flex:5,
         flexDirection: 'column',
+        
+    },
+    wrappingContainer: {
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: 'wrap'
+    },
+    noteContainer: {
+        flex: 1,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    noteText: {
+        fontSize: 20,
+        color: 'white'
+    },
+    barContainer: {
+        
+        width: ((DEVICE_WIDTH - 10) /4),
+        height: 50,
+        flexDirection: 'row',
+        marginVertical: 8,
+        borderLeftWidth: 0.5,
+        borderRightWidth: 0.5,
+        borderColor: '#707070',
+        padding: 2,
     },
 })

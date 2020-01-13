@@ -10,6 +10,10 @@ import SectionEditScreen from './app/components/sectionEditScreen/SectionEditScr
 import SectionViewScreen from './app/components/sectionViewScreen/SectionViewScreen'
 import BarEditScreen from './app/components/barEditScreen/BarEditScreen'
 
+if(__DEV__) {
+  import("./app/ReactotronConfig")
+}
+
 const RootStack = createStackNavigator(
   {
     Login: {
@@ -20,35 +24,47 @@ const RootStack = createStackNavigator(
     },
     Library: {
       screen: LibraryScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
     },
     SongView: {
-      screen: SongViewScreen
+      screen: SongViewScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
     },
     NewSong: {
       screen: NewSongScreen,
       navigationOptions: {
-        mode: 'modal'
+        headerShown: false,
       }
     },
     NowPlaying: {
-      screen: NowPlayingScreen
+      screen: NowPlayingScreen,
+      headerShown: false,
     },
     SectionEdit: {
-      screen: SectionEditScreen
+      screen: SectionEditScreen,
+      headerShown: false,
     },
     SectionView: {
-      screen: SectionViewScreen
+      screen: SectionViewScreen,
+      headerShown: false,
     },
     SongView: {
-      screen: SongViewScreen
+      screen: SongViewScreen,
+      headerShown: false,
     },
     BarEdit: {
-      screen: BarEditScreen
+      screen: BarEditScreen,
+      headerShown: false,
     }
   },
   { 
     initialRouteName: 'Library', 
     mode: 'card',
+    headerShown: false,
   },
 )
 

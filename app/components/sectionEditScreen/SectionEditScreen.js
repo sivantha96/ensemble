@@ -8,12 +8,16 @@ import {
     ScrollView,
 } from 'react-native'
 import styles from './Styles'
+import {
+    NavigationEvents
+} from 'react-navigation'
 
 export default class SectionEditScreen extends Component {
     //constructor to hold the information in the state
     constructor(props) {
         super(props)
         this.state = {
+            headerTitle: props.navigation.getParam('sectionTitle', 'New Section'),
             section_id: null,
             title: "",
             timeSignature: props.navigation.getParam('timeSignature', ''),
@@ -27,53 +31,19 @@ export default class SectionEditScreen extends Component {
         }
     }
 
-    //options for header of the screen
-    static navigationOptions = ({navigation}) => {
-        return ({
-            headerForceInset: { top: 'never', bottom: 'never' },
-            title: navigation.getParam('sectionTitle', 'New Section'),
-            headerTitleContainerStyle: styles.appHeaderTitleContainer,
-            headerTitleAlign: 'center',
-            headerTitleStyle: styles.appHeaderTitle,   
-            headerLeftContainerStyle: styles.appHeaderLeftContainer,
-            headerRightContainerStyle: styles.appHeaderRightContainer,
-            headerLeft: () => (
-                <Button onPress={() => this.cancelButton({navigation})} title="Cancel" color="#FF9500"/>
-            ),
-            headerRight: () => (
-                <Button onPress={(isEmpty) => this.doneButton({navigation})} title="Done" color="#FF9500"/>
-            )
-        })
-    }
+    static navigationOptions = {
+        header: null,
+        };
 
-    // //Get all bars related to this section
-    // getBarData = async () => {
-    //     try {
-    //         const response = await BarService.getAllBars(sectionId)
-    //         this.setState({
-    //             bars: [... response.data]
-    //         })
-            
-    //     } catch (error) {
-    //         console.log('error' , error)
-            
-    //     }
-    // }
-
-    //Executed after mounting
-    componentDidMount() {
-        this.props.navigation.setParams({doneButton: this.doneButton, cancelButton: this.cancelButton})
-        //this.getBarData()
-    }
 
     //Discard all changes and go back
-    static cancelButton({navigation}){
+    cancelButton(){
         navigation.goBack()
     }
 
     //Save all changes and go to Song View Screen
-    static doneButton({navigation}){
-        navigation.navigate('NewSong', this.state)
+    doneButton(){
+        navigation.navigate('NewSong')
     }
 
     //Return a view of a single bar
@@ -115,91 +85,109 @@ export default class SectionEditScreen extends Component {
 
     render() {
         return (
-            <View style={styles.appContainer}>
-                <View style={styles.topContainer}>
-                    <View style={styles.infoContainer}>
-                        <View style={styles.titleContainer}>
-                            <TextInput style={styles.titleInput}
-                                enablesReturnKeyAutomatically = {true}
-                                keyboardAppearance= 'dark'
-                                returnKeyType= 'done'
-                                placeholder= 'Untitled Section'
-                                placeholderTextColor= '#fff'
-                                onChangeText = {(text) => this.setState({title:text})}
-                                />
-                        </View>
-                        <View style={styles.manyButtonContainer}>
-                            <View style={styles.singleButtonContainer}>
-                                <TextInput style={styles.buttonInput}
+            <View style={{flex: 1}}>
+                <View style={styles.appHeaderContainer}>
+                    <View style={styles.appHeaderLeftContainer}>
+                        <Button onPress={() => this.cancelButton()} title="Cancel" color="#FF9500"/>
+                    </View>
+                    <View  style={styles.appHeaderTitleContainer}>
+                        <Text style={styles.appHeaderTitle}>{this.state.headerTitle}</Text>
+                    </View>
+                    <View  style={styles.appHeaderRightContainer}>
+                        <Button onPress={() => this.doneButton()} title="Done" color="#FF9500"/>
+                    </View>
+                </View>
+                <View style={styles.appContainer}>
+                    <NavigationEvents
+                        //Refresh here
+                        // onDidFocus={payload => this.getSectionData()}
+                    />
+                    <View style={styles.topContainer}>
+                        <View style={styles.infoContainer}>
+                            <View style={styles.titleContainer}>
+                                <TextInput style={styles.titleInput}
                                     enablesReturnKeyAutomatically = {true}
                                     keyboardAppearance= 'dark'
                                     returnKeyType= 'done'
-                                    placeholder= 'Bars per line'
-                                    placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({barsPerLine:text})}
-                                />
+                                    placeholder= 'Untitled Section'
+                                    placeholderTextColor= '#fff'
+                                    onChangeText = {(text) => this.setState({title:text})}
+                                    />
                             </View>
-                            <View style={styles.singleButtonContainer}>
-                                <TextInput style={styles.buttonInput}
-                                    enablesReturnKeyAutomatically = {true}
-                                    keyboardAppearance= 'dark'
-                                    returnKeyType= 'done'
-                                    placeholder= 'Instrument'
-                                    placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({instrument:text})}
-                                />
-                            </View>
-                            <View style={styles.singleButtonContainer}>
-                                <TextInput style={styles.buttonInput}
-                                    enablesReturnKeyAutomatically = {true}
-                                    keyboardAppearance= 'dark'
-                                    returnKeyType= 'done'
-                                    placeholder= 'Notation Type'
-                                    placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({notationType:text})}
-                                />
-                            </View>
-                            <View style={styles.singleButtonContainer}>
-                                <TextInput style={styles.buttonInput}
-                                    enablesReturnKeyAutomatically = {true}
-                                    keyboardAppearance= 'dark'
-                                    returnKeyType= 'done'
-                                    placeholder= 'No. of Bars'
-                                    placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setBars(text)}
-                                />
-                            </View>
-                            <View style={styles.singleButtonContainer}>
-                                <TextInput style={styles.buttonInput}
-                                    enablesReturnKeyAutomatically = {true}
-                                    keyboardAppearance= 'dark'
-                                    returnKeyType= 'done'
-                                    placeholder= 'Tempo'
-                                    placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({tempo:text})}
-                                />
-                            </View>
-                            <View style={styles.singleButtonContainer}>
-                                <TextInput style={styles.buttonInput}
-                                    enablesReturnKeyAutomatically = {true}
-                                    keyboardAppearance= 'dark'
-                                    returnKeyType= 'done'
-                                    placeholder= 'Time Signature'
-                                    placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({timeSignature:text})}
-                                />
+                            <View style={styles.manyButtonContainer}>
+                                <View style={styles.singleButtonContainer}>
+                                    <TextInput style={styles.buttonInput}
+                                        enablesReturnKeyAutomatically = {true}
+                                        keyboardAppearance= 'dark'
+                                        returnKeyType= 'done'
+                                        placeholder= 'Bars per line'
+                                        placeholderTextColor= '#FF9500'
+                                        onChangeText = {(text) => this.setState({barsPerLine:text})}
+                                    />
+                                </View>
+                                <View style={styles.singleButtonContainer}>
+                                    <TextInput style={styles.buttonInput}
+                                        enablesReturnKeyAutomatically = {true}
+                                        keyboardAppearance= 'dark'
+                                        returnKeyType= 'done'
+                                        placeholder= 'Instrument'
+                                        placeholderTextColor= '#FF9500'
+                                        onChangeText = {(text) => this.setState({instrument:text})}
+                                    />
+                                </View>
+                                <View style={styles.singleButtonContainer}>
+                                    <TextInput style={styles.buttonInput}
+                                        enablesReturnKeyAutomatically = {true}
+                                        keyboardAppearance= 'dark'
+                                        returnKeyType= 'done'
+                                        placeholder= 'Notation Type'
+                                        placeholderTextColor= '#FF9500'
+                                        onChangeText = {(text) => this.setState({notationType:text})}
+                                    />
+                                </View>
+                                <View style={styles.singleButtonContainer}>
+                                    <TextInput style={styles.buttonInput}
+                                        enablesReturnKeyAutomatically = {true}
+                                        keyboardAppearance= 'dark'
+                                        returnKeyType= 'done'
+                                        placeholder= 'No. of Bars'
+                                        placeholderTextColor= '#FF9500'
+                                        onChangeText = {(text) => this.setBars(text)}
+                                    />
+                                </View>
+                                <View style={styles.singleButtonContainer}>
+                                    <TextInput style={styles.buttonInput}
+                                        enablesReturnKeyAutomatically = {true}
+                                        keyboardAppearance= 'dark'
+                                        returnKeyType= 'done'
+                                        placeholder= 'Tempo'
+                                        placeholderTextColor= '#FF9500'
+                                        onChangeText = {(text) => this.setState({tempo:text})}
+                                    />
+                                </View>
+                                <View style={styles.singleButtonContainer}>
+                                    <TextInput style={styles.buttonInput}
+                                        enablesReturnKeyAutomatically = {true}
+                                        keyboardAppearance= 'dark'
+                                        returnKeyType= 'done'
+                                        placeholder= 'Time Signature'
+                                        placeholderTextColor= '#FF9500'
+                                        onChangeText = {(text) => this.setState({timeSignature:text})}
+                                    />
+                                </View>
                             </View>
                         </View>
                     </View>
-                </View>
-                <View style={styles.bottomContainer}>
-                    <ScrollView>
-                        <View style={styles.wrappingContainer}>
-                            {this.state.bars.map(bar => this.renderBar(bar))}
-                        </View>
-                    </ScrollView>
+                    <View style={styles.bottomContainer}>
+                        <ScrollView>
+                            <View style={styles.wrappingContainer}>
+                                {this.state.bars.map(bar => this.renderBar(bar))}
+                            </View>
+                        </ScrollView>
+                    </View>
                 </View>
             </View>
+            
         )
     }
 }

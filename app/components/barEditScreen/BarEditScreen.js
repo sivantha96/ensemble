@@ -27,12 +27,12 @@ export default class BarEditScreen extends Component {
 
    //Discard all changes and go back
    cancelButton(){
-        navigation.goBack()
+        this.props.navigation.goBack()
     }
 
     //Save all changes and go to Song View Screen
     doneButton(){
-        navigation.navigate('SectionEdit')
+        this.props.navigation.navigate('SectionEdit', {note_1: this.state.note_1, note_2: this.state.note_2, note_3: this.state.note_3, note_4: this.state.note_4, barId: this.state.barId})
     }
 
     render() {

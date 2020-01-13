@@ -1,144 +1,193 @@
 import React, { Component } from 'react'
 import { 
     Text, 
-    StyleSheet, 
     View,
-    TextInput,
     Image,
     Button,
     SectionList,
     TouchableOpacity
 } from 'react-native'
 import styles from './Styles'
+import {
+    NavigationEvents
+} from 'react-navigation'
+import SongService from '../../services/songService'
 
 export default class SongViewScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            songName:"",
-            timeSignature:"4/4",
-            tempo: 108,
-            key:"G",
-            sections:["AA","BB","CC","DD"]
+            songId: props.navigation.getParam('songId'),
+            songName: props.navigation.getParam('songTitle'),
+            timeSignature:props.navigation.getParam('time_signature'),
+            tempo: props.navigation.getParam('tempo'),
+            key:props.navigation.getParam('song_key'),
+            sections:[
+                {
+                    name: 'Intro',
+                    instrument: 'Guitar'
+                },
+                {
+                    name: 'Chorus',
+                    instrument: 'Guitar'
+                },
+                {
+                    name: 'Verse 1',
+                    instrument: 'Guitar'
+                },
+                {
+                    name: 'Inter 1',
+                    instrument: 'Guitar'
+                },
+                {
+                    name: 'Verse 2',
+                    instrument: 'Guitar'
+                },
+                {
+                    name: 'Inter 2',
+                    instrument: 'Guitar'
+                },
+                {
+                    name: 'Chorus',
+                    instrument: 'Guitar'
+                }
+            ]
         }
     }
 
-    //options for header of the screen
-    static navigationOptions = ({navigation}) => {
+    // //Executed after mounting
+    // componentDidMount(){ 
+    //     this.getSongData(this.state.songId)
+    // }
 
-        return ({
-            headerForceInset: { top: 'never', bottom: 'never' },
-            title: navigation.getParam('songTitle', 'Untitled Song'),
-            headerTitleContainerStyle: styles.appHeaderTitleContainer,
-            headerTitleAlign: 'center',
-            headerTitleStyle: styles.appHeaderTitle,   
-            headerLeftContainerStyle: styles.appHeaderLeftContainer,
-            headerRightContainerStyle: styles.appHeaderRightContainer,
-            headerLeft: () => (
-                <Button onPress={() => this.homeButton({navigation})} title="Home" color="#FF9500"/>
-            ),
-            headerRight: () => (
-                <Button onPress={(isEmpty) => this.editButton({navigation})} title="Edit" color="#FF9500"/>
-            )
-        })
-    }
+    // //Get all songs
+    // getSongData = async ()  => {
+    //     try {
+    //         const response = await SongService.getSong(16)
+    //         this.setState({
+    //             songName: response.data.name,
+    //             timeSignature: '4/4',
+    //             tempo: response.data.tempo,
+    //             key: response.data.song_key,
+    //         })
+    //         console.log('test componentDidMount', response.data)
+            
+    //     } catch (error) {
+    //         console.log('error ', error);
+    //     }
+    // }
+
+    //options for header of the screen
+    static navigationOptions = {
+        header: null,
+    };
 
     //Go back to home 
-    static homeButton({navigation}){
-        navigation.navigate('Library')
+    homeButton(){
+        this.props.navigation.navigate('Library')
     }
 
     //Go to New Song screen
-    static editButton({navigation}){
-        navigation.navigate('NewSong')
+    editButton(){
+        this.props.navigation.navigate('NewSong')
     }
 
     //render a separator line between items in the list
     renderSeparator = () => {
         return <View style={styles.separator}/>
     }
+
     //render an item in the list
-    renderItem({item, index}) {
+    renderItem({item}) {
         return (
             <TouchableOpacity style={styles.listSectionContainer} onPress={() => 
                 this.props.navigation.navigate('SectionView', 
                     {
                         tempo: this.state.tempo, 
-                        key: this.state.key, 
-                        timeSignature: this.state.timeSignature
+                        time_signature: this.state.timeSignature,
+                        instrument: item.instrument,
+                        section_title: item.name,
                     }
                 )}>
-                
                 <View style={styles.listItemContainer}>
-                    <Text style={styles.listItemText}>{item}</Text>
+                    <Text style={styles.listItemText}>{item.name + ' - ' + item.instrument}</Text> 
                 </View>
             </TouchableOpacity>
         )
     }
 
-    //Go to Section Edit from a section
-
-
     render() {
         return (
-            <View style={styles.appContainer} /*This is the container of the full View*/>
-                <View style={styles.topContainer} /*Container of the upper section of the View*/>
-                    <View style={styles.albumArtContainer} /*Container of the Album Art*/>
-                        <Image style={styles.albumArt} source={require('../../assets/albumArt.jpg')} height={'100%'}/>
+            <View style={{flex: 1}}>
+                <View style={styles.appHeaderContainer}>
+                    <View style={styles.appHeaderLeftContainer}>
+                        <Button onPress={() => this.homeButton()} title="Home" color="#FF9500"/>
                     </View>
-                    <View style={styles.infoContainer} /*Container of the information section inside the upper section of the View*/>
-                        <View style={styles.titleContainer} /*Container of the title text input*/>
-                            <View >  
-                                <Text style={styles.titleInput}>
-                                    {/*this.state.songName*/"Test Name"}
-                                </Text>
-                            </View>
-                            <View>
-                                <Text style={{color:"white"}}>
-                                        {this.state.key+"  |  "+this.state.tempo+"  |  "+this.state.timeSignature}
-                                    
-                                </Text>    
-                            </View>
-                        </View>
-                        <View style={styles.manyButtonContainer} /*Keep all these singleButtonContainers in this manyButtonContainer to maintain the layout*/>
-                            <View style={styles.singleButtonContainer} >
-                                <TouchableOpacity  style={styles.buttonInput} onPress={() => this.props.navigation.navigate("NowPlaying")} >
-                                    <Text style={{color:"#FF9500"}}>Play</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.singleButtonContainer} /*Add a button or a text Input here*/>
-                                
-                            </View>
-                            <View style={styles.singleButtonContainer} /*Add a button or a text Input here*/>
-                                
-                            </View>
-                            <View style={styles.singleButtonContainer} /*Add a button or a text Input here*/>
-
-                            </View>
-                            <View style={styles.singleButtonContainer} >
-
-                            </View>
-                        </View>
+                    <View  style={styles.appHeaderTitleContainer}>
+                        <Text style={styles.appHeaderTitle}>{''}</Text>
+                    </View>
+                    <View  style={styles.appHeaderRightContainer}>
+                        <Button onPress={() => this.editButton()} title="Edit" color="#FF9500"/>
                     </View>
                 </View>
-                <View style={styles.bottomContainer} >
-                <SectionList
-                        sections={[
-                            {
-                                title: '',
-                                data: this.state.sections
-                            }
-                        ]}
-                        ItemSeparatorComponent={this.renderSeparator}
-                        renderItem={({item,index}) => this.renderItem({item,index})}  
-                        keyExtractor={(item, index) => index}
-                        
+                <View style={styles.appContainer}>
+                    <NavigationEvents
+                            //Refresh here
+                            // onDidFocus={payload => this.getSectionData()}
                     />
+                    <View style={styles.topContainer}>
+                        <View style={styles.albumArtContainer}>
+                            <Image style={styles.albumArt} source={require('../../assets/albumArt.jpg')} height={'100%'}/>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <View style={styles.titleContainer}>
+                                <View >  
+                                    <Text style={styles.titleInput}>{this.state.songName}</Text>
+                                </View>
+                                <View>
+                                    <Text style={{color:"white"}}>
+                                            {this.state.key + " | " + this.state.tempo + " | " + this.state.timeSignature}
+                                    </Text>    
+                                </View>
+                            </View>
+                            <View style={styles.manyButtonContainer}>
+                                <View style={styles.singleButtonContainer} >
+                                    <TouchableOpacity  style={styles.buttonInput} onPress={() => this.props.navigation.navigate("NowPlaying")} >
+                                        <Text style={{color:"#FF9500"}}>{'Play'}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.singleButtonContainer}>
+                                    
+                                </View>
+                                <View style={styles.singleButtonContainer}>
+                                    
+                                </View>
+                                <View style={styles.singleButtonContainer}>
 
+                                </View>
+                                <View style={styles.singleButtonContainer}>
 
-
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.bottomContainer} >
+                    <SectionList
+                            sections={[
+                                {
+                                    title: '',
+                                    data: this.state.sections
+                                }
+                            ]}
+                            ItemSeparatorComponent={this.renderSeparator}
+                            renderItem={({item,index}) => this.renderItem({item,index})}  
+                            keyExtractor={(item, index) => index}
+                            
+                        />
+                    </View>
                 </View>
             </View>
+           
         )
     }
 }

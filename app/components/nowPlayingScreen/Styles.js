@@ -220,18 +220,19 @@ export default StyleSheet.create({
         flexDirection: 'row'
     },
     topLineContainer: {
+        alignItems: 'center',
         flex: 1,
         flexDirection: 'row',
     },
     middleLineContainer: {
+        alignItems: 'center',
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: 'yellow'
     },
     bottomLineContainer:{
+        alignItems: 'center',
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: 'blue'
     },
     timeText: {
         color: 'white',

@@ -62,7 +62,7 @@ const RootStack = createStackNavigator(
     }
   },
   { 
-    initialRouteName: 'Library', 
+    initialRouteName: 'NowPlaying', 
     mode: 'card',
     headerShown: false,
   },

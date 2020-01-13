@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { 
     Text, 
     StatusBar,
-    View, Button
+    View, 
+    Button,
+    Image,
 } from 'react-native'
 import styles from './Styles'
 
@@ -10,6 +12,8 @@ export default class NowPlayingScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            min: 0,
+            sec: 0,
             count: 0,
             slideTime: 13333.333,
             notes: [
@@ -147,8 +151,25 @@ export default class NowPlayingScreen extends Component {
         )
     }
 
+    clock = () => {
+        if(this.state.sec != 59){
+            this.setState(prevState => ({
+                sec: prevState.sec + 1
+            }))
+        }
+        else {
+            this.setState(prevState => ({
+                sec: 0,
+                min: prevState.min+1
+            }))
+        }
+    }
+
     componentDidMount() {
-        setInterval(this.slideLine, 2000)
+        this.slideLine()
+        this.slideLine()
+        setInterval(this.slideLine, this.state.slideTime)
+        setInterval(this.clock, 1000)
     }
 
 
@@ -172,8 +193,8 @@ export default class NowPlayingScreen extends Component {
     //Render a note 
     renderNote(note){
         return(
-            <View style={{flex:1}}>
-                <Text style={{color:'white', fontSize:30}}>{note}</Text>
+            <View style={{flex:1, justifyContent:'center'}}>
+                <Text style={{color:'white',textAlign:'center', fontSize:30}}>{note}</Text>
             </View>
         )
     }
@@ -187,23 +208,26 @@ export default class NowPlayingScreen extends Component {
                     </View>
                     <View  style={styles.appHeaderMiddleContainer}>
                         <View style={styles.timeContainer}>
-                            <Text style={styles.timeText}>02:52</Text>
+                            <Text style={styles.timeText}>{this.state.min + ':' + this.state.sec}</Text>
                             <Text style={{color: 'white'}}>Duration</Text>
                         </View>
                         <View style={styles.controlContainer}>
                             <View style={styles.songNameContainer}>
-                                <Text style={{color: 'white', textAlign: 'center',}}>Song Name Goes Here</Text>
+                                <Text style={{color: 'white', textAlign: 'center', fontSize: 20}}>Unmadini - BnS</Text>
                             </View>
-                            <View style={styles.controls}></View>
+                            {/* <View style={styles.controls}>
+                                
+                            </View> */}
                         </View>
                         <View style={styles.timeContainer}>
-                            <Text style={styles.timeText}>252</Text>
+                            <Text style={styles.timeText}>72</Text>
                             <Text style={{color: 'white'}}>Tempo</Text>
                         </View>
                     </View>
                     <View  style={styles.appHeaderRightContainer}>
-                       <View style={styles.metronomeContainer}>
-                            <Text style={styles.metronomeText}>3</Text>
+                       <View style={styles.metronomeContainer2}>
+                            <View style={styles.metronomeContainer}></View>
+                            {/* <Text style={styles.metronomeText}></Text> */}
                        </View>
                     </View>
                 </View>

@@ -68,6 +68,8 @@ const RootStack = createStackNavigator(
   },
 )
 
+console.disableYellowBox='true'
+
 const AppContainer = createAppContainer(RootStack)
 export default class App extends React.Component {
   render() {

@@ -38,12 +38,12 @@ export default class SectionEditScreen extends Component {
 
     //Discard all changes and go back
     cancelButton(){
-        navigation.goBack()
+        this.props.navigation.goBack()
     }
 
     //Save all changes and go to Song View Screen
     doneButton(){
-        navigation.navigate('NewSong')
+        this.props.navigation.navigate('NewSong')
     }
 
     //Return a view of a single bar

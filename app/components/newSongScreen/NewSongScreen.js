@@ -68,7 +68,7 @@ export default class NewSongScreen extends Component {
     //Save all changes and go to Song View Screen
     doneButton(){
         this.newSongData()
-        this.props.navigation.navigate('SongView')
+        this.props.navigation.navigate('SongView', {songTitle: this.state.title, tempo: this.state.tempo, song_key: this.state.key, time_signature: this.state.timeSignature,})
     }
 
     //render a separator line between items in the list

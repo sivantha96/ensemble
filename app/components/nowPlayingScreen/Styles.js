@@ -67,7 +67,7 @@ export default StyleSheet.create({
     //Right container of the title in the header bar of the app
     appHeaderRightContainer: {
         flex: 1,
-        paddingVertical: 10,
+        paddingVertical: 15,
         flexDirection: 'row-reverse',
         alignItems: 'center',
         justifyContent: 'center'
@@ -192,6 +192,16 @@ export default StyleSheet.create({
         justifyContent: 'center',
         aspectRatio: 1,
         borderRadius: 100,
+        padding: 2,
+    },
+    metronomeRound: {
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        aspectRatio: 1,
+        borderRadius: 100,
+        backgroundColor: '#FF9500',
+        padding: 10,
         borderWidth: 1,
         borderColor: '#FF9500'
     },
@@ -211,27 +221,36 @@ export default StyleSheet.create({
     },
     songNameContainer: {
         flex: 1,
-        
+        marginTop: 5,
+        alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center'
     },
     controls: {
+        marginHorizontal: 20,
         flex: 2,
         flexDirection: 'row'
     },
     topLineContainer: {
+        padding: 10,
+        alignItems: 'center',
         flex: 1,
         flexDirection: 'row',
     },
     middleLineContainer: {
+        margin: 10,
+        borderColor: '#FF950030',
+        borderWidth: 0.5,
+        alignItems: 'center',
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: 'yellow'
+        backgroundColor: '#82858325',
     },
     bottomLineContainer:{
+        padding: 10,
+        alignItems: 'center',
         flex: 1,
         flexDirection: 'row',
-        backgroundColor: 'blue'
     },
     timeText: {
         color: 'white',
@@ -241,5 +260,10 @@ export default StyleSheet.create({
     tempoText: {
         fontSize: 25,
         color: 'white'
+    },
+    iconContainer: {
+        height: '100%',
+        aspectRatio: 1,
+        backgroundColor: 'red',
     }
 })

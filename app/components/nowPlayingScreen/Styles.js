@@ -2,6 +2,7 @@ import {
     StyleSheet,
     Dimensions,  
 } from 'react-native'
+import { Header } from 'react-navigation-stack';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -38,8 +39,15 @@ export default StyleSheet.create({
         aspectRatio: 1,
         borderRadius: 10,
     },
+    appHeaderContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor: '#212121'
+    },
     //Container of the title in the header bar of the app
     appHeaderTitleContainer: {
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     //Title in the header bar of the app
@@ -50,17 +58,19 @@ export default StyleSheet.create({
     },
     //Left container of the title in the header bar of the app
     appHeaderLeftContainer: {
-        marginLeft: 10,
-        flex: 1,
-        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'flex-start',
     },
     //Right container of the title in the header bar of the app
     appHeaderRightContainer: {
-        marginRight: 10,
         flex: 1,
+        paddingVertical: 10,
         flexDirection: 'row-reverse',
         alignItems: 'center',
+        justifyContent: 'center'
     },
     //Separator line 
     separator: {
@@ -146,21 +156,18 @@ export default StyleSheet.create({
     //------------------------------------------------------------------------
     
     appContainer: {
-        flex:1,
+        flex:3,
         flexDirection: 'column',
     },
     topContainer: {
-        flex:0.75,
+        flex:4,
         flexDirection: 'row',
         borderBottomColor: '#707070',
         borderBottomWidth: 0.5,
-        justifyContent: 'space-around',
-        backgroundColor:'rosybrown',
     },
     bottomContainer: {
-        flex:3,
+        flex:5,
         flexDirection: 'column',
-        //backgroundColor: 'purple',
     },
     addNewButtonContainer: {
         alignItems: 'center',
@@ -175,70 +182,64 @@ export default StyleSheet.create({
         padding: 5,
         fontSize: 25
     },
-
-    activeViewer: {
-        flex: 1,
-        backgroundColor: 'grey',
+    appHeaderMiddleContainer:  {
+        flex: 4,
+        flexDirection: 'row',
     },
-
-    inactiveTopViewer: {
-        flex: 1,
-        backgroundColor: 'black',
-    },
-
-    inactiveBottomViewer: {
-        flex: 1,
-        backgroundColor: 'black',
-    },
-
-    timeContainer: {
-        flex: 2,
-        backgroundColor: 'salmon',
-
-    },
-
-    previousButtonContainer: {
-        flex: 1,
-        backgroundColor: 'red',
-
-    },
-
-    playButtonContainer: {
-        flex: 1,
-        backgroundColor: 'crimson',
-    },
-
-    stopButtonContainer: {
-        flex: 1,
-        backgroundColor: 'firebrick',
-
-    },  
-
-    nextButtonContainer: {
-        flex: 1,
-        backgroundColor: 'darkred',
-
-    },
-
-    tempoContainer: {
+    metronomeContainer: {
+        height: '100%',
         alignItems: 'center',
-        justifyContent: 'space-evenly',
-        flex: 2,
-        backgroundColor: 'cadetblue',
-
-
+        justifyContent: 'center',
+        aspectRatio: 1,
+        borderRadius: 100,
+        borderWidth: 1,
+        borderColor: '#FF9500'
     },
-
-    realTimeTempoContainer: {
-        flex: 2,
-        backgroundColor: 'teal',
-
+    metronomeText: {
+        textAlign: "center",
+        fontSize: 40,
+        color: '#FF9500'
     },
-
-    tempoText: {
-        color: 'white',
-        fontSize: 15,
+    timeContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+    },
+    controlContainer: {
+        flex: 2,
+        flexDirection: 'column',
+    },
+    songNameContainer: {
+        flex: 1,
         
+        alignContent: 'center',
+        justifyContent: 'center'
+    },
+    controls: {
+        flex: 2,
+        flexDirection: 'row'
+    },
+    topLineContainer: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    middleLineContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor: 'yellow'
+    },
+    bottomLineContainer:{
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor: 'blue'
+    },
+    timeText: {
+        color: 'white',
+        textAlign: "center",
+        fontSize: 40,
+    },
+    tempoText: {
+        fontSize: 25,
+        color: 'white'
     }
-    
 })

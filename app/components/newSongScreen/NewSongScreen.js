@@ -29,6 +29,10 @@ export default class NewSongScreen extends Component {
         }
     }
 
+    static navigationOptions = {
+        header: null,
+        };
+
     getSectionData = () => {
         const newSection = [{ name: this.props.navigation.getParam('sectionTitle'), instrument: this.props.navigation.getParam('instrument')}]
         if (newSection[0].name == undefined) {
@@ -154,7 +158,7 @@ export default class NewSongScreen extends Component {
                     <View  style={styles.appHeaderRightContainer}>
                         <Button onPress={() => this.doneButton()} title="Done" color="#FF9500"/>
                     </View>
-            </View>
+                </View>
                 <View style={styles.appContainer}>
                     <NavigationEvents
                             //Refresh here

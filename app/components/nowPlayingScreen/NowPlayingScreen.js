@@ -2,119 +2,69 @@ import React, { Component } from 'react'
 import { 
     Text, 
     StyleSheet, 
-    View,
-    Button, 
-
+    View, Button
 } from 'react-native'
-
 import styles from './Styles'
 
 export default class NowPlayingScreen extends Component {
-    //constructor to hold the information in the state
     constructor(props) {
-        super()
+        super(props)
         this.state = {
-            title: "",
-            timeSignature: "",
-            tempo: 0,
-            sections: [],
-            songDuration: 0,
-            tempoDisplay: 0,
-
         }
     }
 
-    //options for header of the screen
-   /* static navigationOptions = ({navigation}) => {
+    static navigationOptions = {
+        header: null,
+        };
 
-        return ({
-            headerForceInset: { top: 'never', bottom: 'never' },
-            title: navigation.getParam('songTitle', 'Untitled Song'),
-            headerTitleContainerStyle: styles.appHeaderTitleContainer,
-            headerTitleAlign: 'center',
-            headerTitleStyle: styles.appHeaderTitle,   
-            headerLeftContainerStyle: styles.appHeaderLeftContainer,
-            headerRightContainerStyle: styles.appHeaderRightContainer,
-            headerLeft: () => (
-                <Button onPress={() => this.backButton({navigation})} title="Back" color="#FF9500"/>
-            ),
-            
-        })
-    } */
 
-    //Go back
-   /* static backButton({navigation}){
-        navigation.goBack()
-    }*/
+    //Discard all changes and go back
+    //Should clear any changes made in the database
+    homeButton(){
+        this.props.navigation.goBack()
+    }
 
+    //Save all changes and go to Song View Screen
+    doneButton(){
+        this.newSongData()
+        this.props.navigation.navigate('SongView')
+    }
 
     render() {
         return (
-            <View style={styles.appContainer}> 
-                <View style={styles.topContainer}>
-                    <View style={styles.timeContainer}>
-                        
-
+            <View style={{flex: 1}}>
+                <View style={styles.appHeaderContainer}>
+                    <View style={styles.appHeaderLeftContainer}>
+                        <Button onPress={() => this.homeButton()} title="〈 Home" color="#FF9500"/>
                     </View>
-
-                    
-                    <View style={styles.previousButtonContainer}>
-
+                    <View  style={styles.appHeaderMiddleContainer}>
+                        <View style={styles.timeContainer}>
+                            <Text style={styles.timeText}>02:52</Text>
+                            <Text style={{color: 'white'}}>Duration</Text>
+                        </View>
+                        <View style={styles.controlContainer}>
+                            <View style={styles.songNameContainer}>
+                                <Text style={{color: 'white', textAlign: 'center',}}>Song Name Goes Here</Text>
+                            </View>
+                            <View style={styles.controls}></View>
+                        </View>
+                        <View style={styles.timeContainer}>
+                            <Text style={styles.timeText}>252</Text>
+                            <Text style={{color: 'white'}}>Tempo</Text>
+                        </View>
                     </View>
-
-
-                    <View style={styles.playButtonContainer}>
-
+                    <View  style={styles.appHeaderRightContainer}>
+                       <View style={styles.metronomeContainer}>
+                            <Text style={styles.metronomeText}>3</Text>
+                       </View>
                     </View>
-
-                    
-                    <View style={styles.stopButtonContainer}>
-
-                    </View>
-
-
-                    <View style={styles.nextButtonContainer}>
-
-                    </View>
-
-
-                    <View style={styles.tempoContainer}>
-                        <Text style={styles.tempoText}>
-                            Tempo 
-                        </Text>
-                        <Text style={styles.tempoText}>
-                            {this.state.tempo}
-                        </Text>
-
-                    </View>
-
-
-                    <View style={styles.realTimeTempoContainer}>
-
-                    </View>
-
-
-
                 </View>
-                    
-                <View style={styles.bottomContainer}>
-                    <View style={styles.inactiveBottomViewer}>
-
-                    </View>
-
-
-                    <View style={styles.activeViewer}>
-
-                    </View>
-
-
-                    <View style={styles.inactiveBottomViewer}>
-
-                    </View>
-                </View>    
+                <View style={styles.appContainer}>
+                    <View style={styles.topLineContainer}></View>
+                    <View style={styles.middleLineContainer}></View>
+                    <View style={styles.bottomLineContainer}></View>
+                </View>
             </View>
         )
     }
 }
-
-

@@ -9,9 +9,10 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
 } from 'react-native'
+import styles from './Styles'
 
 export default class LoginScreen extends React.Component {
-    //because we want to save information in the state of the class
+    //constructor to hold the information in the state
     constructor(props) {
         super(props)
         this.state = {
@@ -20,26 +21,28 @@ export default class LoginScreen extends React.Component {
         }
     }
 
+    //function to validate the user
     logIn() {
         if(this.state.username === 'admin' && this.state.password === 'admin')
             //navigate to the Library Screen using the 'navigation' prop that was passed to this instance(LoginScreen)
             return this.props.navigation.navigate('Library')
         else{
+            //display an alert for incorrect password or email
             Alert.alert('Incorrect!', 'Username of password is incorrect. Please try again.')
         }
     }
 
     render() {
         return (
-            //Fix the issue that keyboard covers the text input field
+            //KeyboardAvoidingView - Fix the issue that keyboard covers the text input field
             <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-                <Text style={styles.whiteHeading}>Log in to your Account</Text>
+                <Text style={styles.whiteSubject}>Log in to your Account</Text>
                 <View height={20}></View>
                 <TextInput 
                     style={styles.textInput} 
                     placeholder='Email'
                     placeholderTextColor='black' 
-                    //should save the input data in the state of the class instance
+                    /*should save the input data in the state of the class instance*/
                     onChangeText={text => this.setState({username: text})} 
                     keyboardType='email-address' 
                     returnKeyType='done'
@@ -53,7 +56,7 @@ export default class LoginScreen extends React.Component {
                     style={styles.textInput} 
                     placeholder='Password' 
                     placeholderTextColor='black' 
-                    //should save the input data in the state of the class instance
+                    /*should save the input data in the state of the class instance*/
                     onChangeText={text => this.setState({password: text})} 
                     secureTextEntry={true} returnKeyType='done'
                     blurOnSubmit={true}
@@ -63,7 +66,6 @@ export default class LoginScreen extends React.Component {
                     enablesReturnKeyAutomatically = {true}
                     keyboardAppearance= 'dark'
                 />
-                //should validate the user
                 <TouchableOpacity style={styles.button} onPress={() => this.logIn()}>
                     <Text style={styles.blackBody}>Log in</Text>
                 </TouchableOpacity>
@@ -74,49 +76,3 @@ export default class LoginScreen extends React.Component {
         )
     }
 }
-
-const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
-
-const styles = StyleSheet.create({
-    whiteHeading: {
-        fontSize: 30,
-        color: '#fff',
-    },
-    whiteBody:{
-        color: '#fff',
-        fontSize: 20,
-    },
-    blackBody:{
-        color: 'black',
-        fontSize: 20,
-    },
-    textInput: {
-        textAlign: 'center',
-        justifyContent: "center",
-        alignItems:'center',
-        width: DEVICE_WIDTH - (DEVICE_WIDTH/3),
-        marginHorizontal: 20,
-        borderRadius: 5,
-        backgroundColor: '#dedad9',
-        margin: 5
-    },
-    button: {
-        textAlign: 'center',
-        justifyContent: "center",
-        alignItems:'center',
-        fontSize: 15,
-        width: DEVICE_WIDTH - (3*DEVICE_WIDTH/5),
-        height: 40,
-        marginHorizontal: 20,
-        borderRadius: 5,
-        backgroundColor: '#dedad9',
-        margin: 5
-    },
-    container: {
-        flex: 1,
-        flexGrow: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    }
-})

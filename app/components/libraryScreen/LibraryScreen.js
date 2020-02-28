@@ -1,95 +1,102 @@
-import React from 'react';
+import React from 'react'
 import {
-    StyleSheet,
     Text,
     View,
     Button,
     StatusBar,
     SectionList,
     TouchableOpacity,
-} from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+} from 'react-native'
+import styles from './Styles'
+import { 
+    SafeAreaView,
+    NavigationEvents,
+ } from 'react-navigation'
+import SongService from '../../services/songService'
 
 SafeAreaView.setStatusBarHeight(0);
 
 export default class LibraryScreen extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
+    //constructor to hold the information in the state
+    constructor (props) {
+        super(props)
+        this.state = {
             title: 'Library',
-            headerRight: () => (
-                <View style={{flex: 1, flexDirection: 'row', paddingRight:5}}>
-                    <StatusBar hidden={true}/>
-                    <Button
-                        onPress={ () => {
-                            navigation.navigate('NewSong', 
-                            {
-                                itemId: 1,
-                                titleParam: 'New Song',
-                            });
-                        }}
-                        title="New Song"
-                        color="#FF9500"
-                    />
-                </View>
-            ),
-        };
+            songs: [],
+        } 
     }
 
+    //Executed after mounting
+    componentDidMount(){ 
+        this.getSongData()
+    }
+
+    //Get all songs
+    getSongData = async ()  => {
+        try {
+            const response = await SongService.getAllSongs()
+            this.setState({
+                songs: [... response.data]
+            })
+            console.log('test componentDidMount', response.data)
+            
+        } catch (error) {
+            console.log('error', error);
+        }
+    }
+
+    //render a separator line between items in the list
     renderSeparator = () => {
-        return <View style={{flex:1, height:0.5, width: '100%', backgroundColor: '#707070', opacity: 50}}/>
+        return <View style={styles.separator}/>
     };
+
+    //render an item in the list
+    renderItem({item}) {
+        return (
+            <TouchableOpacity style={styles.listItemContainer} onPress={() => this.props.navigation.navigate('SongView', {songId: item.id, songTitle: item.name, tempo: item.tempo, song_key: item.song_key, time_signature: item.time_signature,})}>
+                <Text style={styles.listItemText}>{item.name}</Text> 
+            </TouchableOpacity>
+        )
+    }
+
+    //render the header of a section in the list
+    renderHeader({section}) {
+        return (
+            <View style={styles.listSectionHeaderContainer}>
+                <Text style={styles.listSectionHeaderText}>{section.title}</Text>
+            </View>
+        )
+    }
 
     render() {
         return (
-            <View style={styles.viewContainer}>
-                <View style={styles.container}> 
-                    <SectionList  
+            <View style={{flex: 1}}>
+                <View style={styles.appHeaderContainer}>
+                        <View style={styles.appHeaderLeftContainer}>
+                        </View>
+                        <View  style={styles.appHeaderTitleContainer}>
+                            <Text style={styles.appHeaderTitle}>{this.state.title}</Text>
+                        </View>
+                        <View  style={styles.appHeaderRightContainer}>
+                            <Button onPress={() => this.props.navigation.navigate('NewSong')} title="New Song" color="#FF9500"/>
+                        </View>
+                    </View>
+                    <View style={styles.appContainer}>
+                    
+                    <NavigationEvents
+                        onDidFocus={payload => this.getSongData()}
+                    />
+                    
+                    <StatusBar hidden={true}/>
+                    <SectionList
                         sections={[  
                             {
                                 title: 'Songs', 
-                                data: 
-                                [
-                                    'ALTERED',
-                                    'ABBY',
-                                    'ACTION',
-                                    'AMUCK',
-                                    'ANGUISH',
-                                    'ALTERED',
-                                    'ABBY',
-                                    'ACTION',
-                                    'AMUCK',
-                                    'ANGUISH'
-                                ]
-                            },
-                            {
-                                title: 'Playlists', 
-                                data: 
-                                [
-                                    'ALTERED',
-                                    'ABBY',
-                                    'ACTION',
-                                    'AMUCK',
-                                    'ANGUISH',
-                                    'ALTERED',
-                                    'ABBY',
-                                    'ACTION',
-                                    'AMUCK',
-                                    'ANGUISH',
-                                ]
+                                data: this.state.songs,
                             },
                         ]}  
-                        renderItem={({item}) => 
-                        <View style={{ flex: 1, height: '100%', width: '100%', backgroundColor: 'black'}} onPress={() => alert('This is an Item!')} >
-                            <View>
-                                <TouchableOpacity onPress={() => alert('This is a button!')}>
-                                    <Text style={styles.itemText}>{item}</Text> 
-                                </TouchableOpacity>
-                            </View>
-                        </View>}  
-                        renderSectionHeader={({section}) => 
-                        <View style={{flex:1, backgroundColor: 'black'}}>
-                            <Text style={styles.headerText}>{section.title}</Text>
-                        </View> } 
+                        renderItem={({item}) => this.renderItem({item})}  
+                        renderSectionHeader={({section}) => this.renderHeader({section})} 
                         keyExtractor={(item, index) => index}
                         ItemSeparatorComponent={this.renderSeparator}
                     /> 
@@ -98,43 +105,3 @@ export default class LibraryScreen extends React.Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    viewContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        justifyContent: 'center',
-    },
-    container: {
-        flex: 1,
-        margin:10,
-        marginTop: 0,
-        flexGrow: 1,
-        flexDirection: 'column',
-        alignItems: 'stretch',
-    },
-    titleContainer: {
-        flex: 1,
-        height: 50,
-        margin: 10,
-        marginLeft: 20,
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-    },
-    headerText: {
-        fontSize: 30,
-        paddingTop: 10,  
-        paddingLeft: 10,  
-        paddingRight: 10,  
-        paddingBottom: 10,  
-        color: '#fff',
-        fontWeight: 'bold',
-    },
-    itemText: {
-        fontSize: 17,
-        padding: 15,  
-        color: '#fff'
-    }
-})
-

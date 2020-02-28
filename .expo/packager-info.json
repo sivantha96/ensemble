@@ -2,8 +2,8 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 2532,
-  "expoServerNgrokUrl": "https://2m-5dv.anonymous.ensemble.exp.direct",
-  "packagerNgrokUrl": "https://packager.2m-5dv.anonymous.ensemble.exp.direct",
-  "ngrokPid": 6784
+  "packagerPid": 6408,
+  "expoServerNgrokUrl": "https://2m-5dv.anonymous.ensemblev1.exp.direct",
+  "packagerNgrokUrl": "https://packager.2m-5dv.anonymous.ensemblev1.exp.direct",
+  "ngrokPid": 16828
 }

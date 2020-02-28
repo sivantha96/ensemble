@@ -37,19 +37,5 @@
   "jest": {
     "preset": "react-native"
   },
-  "private": true,
-  "name": "ensemble",
-  "description": "Hi! This is the EnsembleV1 mobile application.",
-  "version": "1.0.0",
-  "main": "app.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sivantha/ensemble.git"
-  },
-  "author": "Sivantha Madusha",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sivantha/ensemble/issues"
-  },
-  "homepage": "https://github.com/sivantha/ensemble#readme"
+  "private": true
 }

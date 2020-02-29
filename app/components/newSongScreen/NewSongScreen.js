@@ -9,6 +9,7 @@ import {
     SectionList,
     TouchableOpacity,
 } from 'react-native'
+import Picker from 'react-native-picker-select'
 import {
     NavigationEvents
 } from 'react-navigation'
@@ -175,6 +176,8 @@ export default class NewSongScreen extends Component {
                                 enablesReturnKeyAutomatically = {true}
                                 keyboardAppearance= 'dark'
                                 returnKeyType= 'done'
+                                textAlign= 'right'
+                                autoCompleteType = 'off'
                                 placeholder= 'Untitled Song'
                                 placeholderTextColor= '#fff'
                                 onChangeText = {(text) => this.setState({ title: text})}
@@ -182,34 +185,137 @@ export default class NewSongScreen extends Component {
                             </View>
                             <View style={styles.manyButtonContainer}>
                                 <View style={styles.singleButtonContainer}>
-                                    <TextInput style={styles.buttonInput}
-                                    enablesReturnKeyAutomatically = {true}
-                                    keyboardAppearance= 'dark'
-                                    returnKeyType= 'done'
-                                    placeholder= 'Tempo'
-                                    placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({ tempo: text})}
-                                    />
+                                <Picker
+                                    onValueChange = { (text) => this.setState({ tempo: text})}
+                                    items={[
+                                        { label: '60', value: 60 },
+                                        { label: '70', value: 70 },
+                                        { label: '80', value: 80 },
+                                        { label: '90', value: 90 },
+                                        { label: '100', value: 100 },
+                                        { label: '110', value: 110 },
+                                        { label: '120', value: 120 },
+                                        { label: '130', value: 130 },
+                                        { label: '140', value: 140 },
+                                        { label: '150', value: 150 },
+                                        { label: '160', value: 160 },
+                                        { label: '170', value: 170 },
+                                        { label: '180', value: 180 },
+                                    ]}
+                                    placeholder={{
+                                                label: 'Tempo',
+                                                value: 0,
+                                                }}
+                                    style={{
+                                        inputAndroid: {
+                                            width: '100%',
+                                            aspectRatio: 2,
+                                            padding:5,
+                                            textAlign: 'center',
+                                            borderColor: '#FF9500', 
+                                            borderWidth: 1, 
+                                            color: '#FF9500',
+                                            borderRadius: 5
+                                        },
+                                        inputIOS: {
+                                            width: '100%',
+                                            aspectRatio: 2,
+                                            padding:5,
+                                            textAlign: 'center',
+                                            borderColor: '#FF9500', 
+                                            borderWidth: 1, 
+                                            color: '#FF9500',
+                                            borderRadius: 5
+                                        },
+                                        placeholder: {
+                                            color: '#FF9500',
+                                        },
+                                    }}
+                                />
                                 </View>
                                 <View style={styles.singleButtonContainer}>
-                                    <TextInput style={styles.buttonInput}
-                                    enablesReturnKeyAutomatically = {true}
-                                    keyboardAppearance= 'dark'
-                                    returnKeyType= 'done'
-                                    placeholder= 'Time Sig.'
-                                    placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({ timeSignature: text})}
-                                    />
+                                <Picker
+                                    onValueChange = { (text) => this.setState({ timeSignature: text})}
+                                    items={[
+                                        { label: '1/2', value: '1/2' },
+                                        { label: '2/2', value: '2/2' },
+                                        { label: '2/4', value: '2/4' },
+                                        { label: '3/4', value: '3/4' },
+                                        { label: '4/4', value: '4/4' },
+                                    ]}
+                                    placeholder={{
+                                                label: 'Time Sign',
+                                                value: '1/1',
+                                                }}
+                                    style={{
+                                        inputAndroid: {
+                                            width: '100%',
+                                            aspectRatio: 2,
+                                            padding:5,
+                                            textAlign: 'center',
+                                            borderColor: '#FF9500', 
+                                            borderWidth: 1, 
+                                            color: '#FF9500',
+                                            borderRadius: 5
+                                        },
+                                        inputIOS: {
+                                            width: '100%',
+                                            aspectRatio: 2,
+                                            padding:5,
+                                            textAlign: 'center',
+                                            borderColor: '#FF9500', 
+                                            borderWidth: 1, 
+                                            color: '#FF9500',
+                                            borderRadius: 5
+                                        },
+                                        placeholder: {
+                                            color: '#FF9500',
+                                        },
+                                    }}
+                                />
                                 </View>
                                 <View style={styles.singleButtonContainer}>
-                                    <TextInput style={styles.buttonInput}
-                                    enablesReturnKeyAutomatically = {true}
-                                    keyboardAppearance= 'dark'
-                                    returnKeyType= 'done'
-                                    placeholder= 'Key'
-                                    placeholderTextColor= '#FF9500'
-                                    onChangeText = {(text) => this.setState({ key: text})}
-                                    />
+                                <Picker
+                                    onValueChange = { (text) => this.setState({ key: text})}
+                                    items={[
+                                        { label: 'C Major', value: 'C' },
+                                        { label: 'D Major', value: 'D' },
+                                        { label: 'E Major', value: 'E' },
+                                        { label: 'F Major', value: 'F' },
+                                        { label: 'G Major', value: 'G' },
+                                        { label: 'A Major', value: 'A' },
+                                        { label: 'B Major', value: 'B' },
+                                    ]}
+                                    placeholder={{
+                                                label: 'Key',
+                                                value: 'Eb',
+                                                }}
+                                    style={{
+                                        inputAndroid: {
+                                            width: '100%',
+                                            aspectRatio: 2,
+                                            padding:5,
+                                            textAlign: 'center',
+                                            borderColor: '#FF9500', 
+                                            borderWidth: 1, 
+                                            color: '#FF9500',
+                                            borderRadius: 5
+                                        },
+                                        inputIOS: {
+                                            width: '100%',
+                                            aspectRatio: 2,
+                                            padding:5,
+                                            textAlign: 'center',
+                                            borderColor: '#FF9500', 
+                                            borderWidth: 1, 
+                                            color: '#FF9500',
+                                            borderRadius: 5
+                                        },
+                                        placeholder: {
+                                            color: '#FF9500',
+                                        },
+                                    }}
+                                />
                                 </View>
                                 <View style={styles.singleButtonContainer}></View>
                                 <View style={styles.singleButtonContainer}></View>

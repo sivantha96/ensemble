@@ -4,6 +4,7 @@ import {
     View,
     Button, 
     Text,
+    KeyboardAvoidingView
 } from 'react-native'
 import styles from './Styles'
 import {
@@ -54,6 +55,9 @@ export default class BarEditScreen extends Component {
                         //Refresh here
                         // onDidFocus={payload => this.getSectionData()}
                     />
+                    <KeyboardAvoidingView>
+
+                   
                     <View style={styles.freeSpace}/>
                     <View style={styles.barEditContainer}>
                         <View style={styles.noteContainer}>
@@ -94,6 +98,7 @@ export default class BarEditScreen extends Component {
                         </View>
                     </View>
                     <View style={styles.freeSpace}/>
+                    </KeyboardAvoidingView>
             </View>
         </View>
             

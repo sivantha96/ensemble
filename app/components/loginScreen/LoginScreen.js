@@ -48,6 +48,7 @@ export default class LoginScreen extends React.Component {
                     returnKeyType='done'
                     enablesReturnKeyAutomatically = {true}
                     clearButtonMode= 'while-editing'
+                    autoCompleteType = 'off'
                     selectTextOnFocus= {true}
                     selectionColor='#FF9500'
                     keyboardAppearance= 'dark'
@@ -56,6 +57,7 @@ export default class LoginScreen extends React.Component {
                     style={styles.textInput} 
                     placeholder='Password' 
                     placeholderTextColor='black' 
+                    autoCompleteType = 'off'
                     /*should save the input data in the state of the class instance*/
                     onChangeText={text => this.setState({password: text})} 
                     secureTextEntry={true} returnKeyType='done'

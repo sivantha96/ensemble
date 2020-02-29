@@ -37,5 +37,19 @@
   "jest": {
     "preset": "react-native"
   },
-  "private": true
+  "private": true,
+  "name": "ensemble",
+  "description": "A music notation viewer and a conductor app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sivantha/ensemble.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sivantha/ensemble/issues"
+  },
+  "homepage": "https://github.com/sivantha/ensemble#readme"
 }

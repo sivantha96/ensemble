@@ -2,8 +2,8 @@
   "name": "Ensemble",
   "displayName": "Ensemble",
   "expo": {
-    "name": "EnsembleV1",
-    "slug": "expo-template-bare",
+    "name": "Ensemble",
+    "slug": "ensemble",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
     "orientation": "landscape",
@@ -13,6 +13,7 @@
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "description": "A music notation viewer and a conductor app"
   }
 }
